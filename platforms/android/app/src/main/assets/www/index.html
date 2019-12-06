@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <script src="js/hammer.min.js"></script>
+	       <script src="js/hammer.fakemultitouch.js"></script>
+        <link href="css/drum.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/sweetalert2.css" />
+
+        <link href="css/style.css" rel="stylesheet">
+      </head>
+
+    <head>
+      <!-- Required meta tags -->
+
+    <title>SENSUM SAUNA</title>
+    </head>
+    <body>
+
+          <header>
+            <div class="row title" swtyle="cursor:pointer;" onclick="if (setupDone && !$('[setup]').is(':visible')) { $(this).toggleClass('active');$('[main]').toggle();$('[setup]').toggle(); }">
+                <span id="saunaName"></span>
+            </div>
+          <section main style="display:none;">
+            <div class="row buttons">
+              <div target="bS_Light" class="col-xs-5t bulb">
+              </div>
+              <div target="bMoodLight" class="col-xs-5t mood">
+              </div>
+              <div target="bStarrySky" class="col-xs-5t starry">
+              </div>
+              <div target="bSaltWall" class="col-xs-5t wall">
+              </div>
+              <div target="bSaltWall" class="col-xs-5t bluetooth">
+              </div>
+              <div target="bVentSate" class="col-xs-5t vent">
+              </div>
+            </div>
+            <div class="row" style="width:100%;">
+              <div id="ventContainer" class="venttimer" style="float:right;min-height:30px;"><span id="venttimer" style="font-size:27px;float:right;margin-right:12px;" measured>00:00</span></div>
+            </div>
+          </section>
+
+          </header>
+          <div id="response" style="display:none;">
+          </div>
+          <div setup style="padding:6px;display:none;">
+            <ul class="nav nav-pills mb-4" id="steps_tab" role="tablist" >
+              <li class="nav-item">
+                <a class="nav-link active" id="step1_tab" data-toggle="pill" href="#step1" role="tab" aria-controls="step1" aria-selected="true">Connect</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="step2_tab" data-toggle="pill" href="#step2" role="tab" aria-controls="step2" aria-selected="false">Password</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="step3_tab" data-toggle="pill" href="#step3" role="tab" aria-controls="step3" aria-selected="false">Network</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" id="step4_tab" data-toggle="pill" href="#step4" role="tab" aria-controls="step4" aria-selected="false">Domain</a>
+              </li>
+            </ul>
+            <div id="step1" class="tab-pane fade show active steps" style="padding: 0;">
+              <div style="display: flex;align-items: center; justify-content: center;">
+
+                <div class="form-group" style="width:100%;">
+                  <button  id="buttonScan" type="button" onclick="scanNetwork();return false;" class="btn btn-primary" style="width:100%;">Scan network</button>
+                  <div id="scan" class="progress progress-bar-grey"  style="display:none;margin-top: 10px;height:30px;border:1px solid black;">
+                    <div id="scanned" class="progress-bar progress-bar-warning progress-bar-orange" role="progressbar"
+                    aria-valuenow="0" aria-valuemin="0" aria-valuemax="125" style="width:0%;color:black;">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <form style="width:100%;margin : 5px auto;" id="setupSauna">
+
+                <div class="form-group">
+                  <label for="url">Sauna URL address (including port number):</label>
+                  <input type="text" class="form-control" id="url" name="url">
+                </div>
+                <div class="form-group">
+                  <label for="pwd">Password:</label>
+                  <input type="password" class="form-control" id="pwd" name="pwd">
+                </div>
+                <button  type="button" onclick="$('#setupSauna').submit();return false;" style="float:right;" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+
+            <div id="step2" class="tab-pane fade steps">
+              <p>step2 ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+
+
+            <div id="step3" class="tab-pane fade steps">
+              <p>step3 ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+            <div id="step4" class="tab-pane fade steps">
+              <p>step3 ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+            </div>
+
+          </div>
+          <div id="error" class="control" style="display:none;">
+            <h3 style='width:100%;clear:both;cursor:pointer;'>Connection fail. Check settings.</h3>
+            <br>
+            <div>
+              <button onclick='window.location.reload();' type='button' class='btn btn-primary'>Reconnect</button>
+            </div>
+          </div>
+          <div  main id="control" class="control" style="display:none;">
+
+            <table main style="margin-top: -100px;">
+              <tr allow="0,1,2,3">
+                <td>
+                  <img settings src="images/Clock.png" />
+                </td>
+                <td colspan="2">
+                  <table settings style="width:100%;"><tr >
+                        <td><div id="hours_div" style="float:left;" class="drum_container">
+                          <span  realvalue timer onclick="startDrum(this,'drum_timerHours');"  id="timerHours_value">00</span><span>:</span>
+                          <select  style="display:none;" name="timerHours" id="timerHours"></select>
+                        </div></td>
+                        <td><div id="minutes_div" style="float:left;"  class="drum_container">
+                          <span  timer  realvalue onclick="startDrum(this,'drum_timerMinutes');" id="timerMinutes_value">00</span><span>:</span>
+                          <select  style="display:none;" name="timerMinutes" id="timerMinutes"></select>
+                        </div></td>
+                        <td><div id="seconds_div" style="float:left;"  class="drum_container">
+                          <span  realvalue  id="timerSeconds_value">00</span>
+                        </div>
+                        </td>
+                      </tr>
+                    </table>
+                </td>
+              </tr>
+              <tr id="tempok" allow="0,1,2,3" source="byMeasureSaunaTemp">
+                <td>
+                  <img src="images/Temp.png" />
+                </td>
+                <td>
+                    <div id="temp_div" settings class="drum_container">
+                      <span  realvalue onclick="startDrum(this,'drum_temperature');"  id="temperature_value"></span><span  realvalue>&#176;C</span>
+                      <select  style="display:none;" name="temperature" id="temperature"></select>
+                    </div>
+                </td>
+                <td>
+                    <div id="temp_div" class="drum_container">
+                      <span   measured id="real_temperature_value"></span><span measured><b>&#176;C</b></span>
+                    </div>
+                </td>
+
+              </tr>
+              <tr id="temperr">
+              <td>
+                <img src="images/Temp.png" />
+              </td>
+              <td colspan="2" style="text-align:center;"><span class="error" style="font-weight:bold;font-size:25px;">Sauna Temperature <br />sensor Error!</span></td></tr>
+                <tr  source="byMeasuredSteam">
+                  <td>
+                    <img src="images/Steam.png" />
+                  </td>
+                  <td allow="0,3" style="min-width:12px;">
+                      <div  id="steam_div"  settings class="drum_container">
+                        <span  realvalue  onclick="startDrum(this,'drum_steam');"  id="steam_value"></span><span  realvalue>%</span>
+                        <select  style="display:none;" name="steam" id="steam"></select>
+                      </div>
+                  </td>
+                  <td allow="0,1,2,3">
+                      <div  id="temp_div" class="drum_container">
+                        <span measured   id="real_steam_value"></span><span  measured><b>%</b></span>
+                      </div>
+                  </td>
+
+                </tr>
+          </table>
+          <footer main>
+            <div class="row" style="width:100%;">
+              <div id="infrafill_div"  allow="1" class="drum_container">
+                 <div id="i1"><span  realvalue  onclick="startDrum(this,'drum_infrafill1');"  id="infrafill1_value">00</span>
+                  <select  style="display:none;" name="infrafill1" id="infrafill1"></select></div>
+                <div id="i2">  <span  realvalue  onclick="startDrum(this,'drum_infrafill2');"  id="infrafill2_value">00</span>
+                  <select  style="display:none;" id="infrafill2"></select></div>
+              </div>
+
+              <div id="roomheat_div"  allow="0,1,2,3"  class="drum_container" style="position:absolute;right:14px;">
+                  <span measured  id="real_room_temp"></span><span measured>&#176;C</span>
+                 <div id="ttemp"><span  realvalue  onclick="$('#real_room_temp').hide();startDrum(this,'drum_temperingtemp');"  id="temperingtemp_value">00&#176;C</span>
+                  <select  style="display:none;" name="temperingtemp" id="temperingtemp"></select></div>
+                <div id="rtemp">  <span  realvalue  onclick="$('#real_room_temp').hide();startDrum(this,'drum_roomtemp');"  id="roomtemp_value">00&#176;C</span>
+                  <select  style="display:none;" id="roomtemp"></select></div>
+              </div>
+            </div>
+            <div bottombuttons class="row buttons">
+              <div saunaState="1" class="col-xs-5t infra">
+              </div>
+              <div saunaState="2"  class="col-xs-5t finn">
+              </div>
+              <div saunaState="3"   class="col-xs-5t steam">
+              </div>
+              <div saunaState="0" class="col-xs-5t stop">
+              </div>
+              <div target="bRoomHeat"  class="col-xs-5t room">
+              </div>
+            </div>
+          </footer>
+
+
+      <!-- Optional JavaScript -->
+      <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+      <script type="text/javascript" src="cordova.js"></script>
+      <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+      <script src="http://malsup.github.com/jquery.form.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script src="js/loadingoverlay.js"></script>
+      <script src="js/drum.js"></script>
+      <script src="js/sweetalert2.js"></script>
+      <script src="js/jquery.validate.js"></script>
+      <script src="js/index.js"></script>
+      <script src="js/socket.js"></script>
+      <script src="js/mainScript.js"></script>
+      <script type="module">
+      const findLocalIp = (logInfo = true) => new Promise( (resolve, reject) => {
+          window.RTCPeerConnection = window.RTCPeerConnection
+                                  || window.mozRTCPeerConnection
+                                  || window.webkitRTCPeerConnection;
+
+          if ( typeof window.RTCPeerConnection == 'undefined' )
+              return reject('WebRTC not supported by browser');
+
+          let pc = new RTCPeerConnection();
+          let ips = [];
+
+          pc.createDataChannel("");
+          pc.createOffer()
+           .then(offer => pc.setLocalDescription(offer))
+           .catch(err => reject(err));
+          pc.onicecandidate = event => {
+              if ( !event || !event.candidate ) {
+                  // All ICE candidates have been sent.
+                  if ( ips.length == 0 )
+                      return reject('WebRTC disabled or restricted by browser');
+
+                  return resolve(ips);
+              }
+
+              let parts = event.candidate.candidate.split(' ');
+              let [base,componentId,protocol,priority,ip,port,,type,...attr] = parts;
+              let component = ['rtp', 'rtpc'];
+
+              if ( ! ips.some(e => e == ip) )
+                  ips.push(ip);
+
+              if ( ! logInfo )
+                  return;
+
+          };
+      } );
+      findLocalIp().then(
+        ips => {
+            let s = '';
+            ips.forEach( ip => s += ip );
+            window.localIP = s;
+        },
+
+    );
+    </script>
+    </body>
+</html>

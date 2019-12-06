@@ -1,0 +1,416 @@
+@font-face {
+font-family: "Babes";
+src: url("/fonts/BebasNeue Regular.otf");
+src: url("/fonts/bebasneue_regular-webfont.woff") format("woff"),
+ url("/fonts/bebasneue_regular-webfont.woff2") format("woff");
+}
+body {
+  background: #272625;
+  height: 100vh;
+  min-height: 100vh;
+  max-height: 100px;
+  padding-top:10px;
+  font-family: 'Babes', Arial, sans-serif;
+ letter-spacing: 4px;
+  width:500px;
+  margin: 0px auto;
+  padding: 0;
+}
+.col-xs-5t,
+.col-sm-5t,
+.col-md-5t,
+.col-lg-5t {
+    position: relative;
+    min-height: 1px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.col-xs-5t {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5t {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5t {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5t {
+        width: 20%;
+        float: left;
+    }
+}
+.row {
+  margin-right: 5px;
+  margin-left: 5px;
+  min-width:90%;
+}
+footer {
+  position: fixed;
+  bottom: 0px;
+  max-width: inherit;
+}
+.row.title {
+  background-image: url("../images/wheels.png");
+  background-size: 40px 40px;
+  background-color: #676766;
+  position:relative;
+  height: 60px;
+  background-repeat: no-repeat;
+  background-position: 98% center;
+  color: white;
+  padding-left:5px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.row.title span {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.row.title.active {
+    background-color: #ef7f1a;
+}
+.row.buttons {
+  padding-top:7px;
+  padding-left: 4px;
+
+}
+.row.buttons div {
+  cursor: pointer;
+  transition: background-color 1s ease-in-out;
+  width: 18%;
+  min-width:18%;
+  max-width: 18%;
+}
+.row.buttons div.bulb {
+  background-image: url("../images/Bulb.png");
+  background-size: 50% 60%;
+  background-position: center center;
+  background-color: #676766;
+  background-repeat: no-repeat;
+
+}
+.row.buttons div.bulb.active {
+      background-color: #ef7f1a;
+}
+
+.row.buttons div.mood {
+  background-image: url("../images/Mood.png");
+  background-size: 87% 67%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+}
+.row.buttons div.mood.active {
+  background-color: #ef7f1a;
+}
+.row.buttons div:not(:first-of-type) {
+  margin-left: 5px;
+}
+.row.buttons div.starry {
+  background-image: url("../images/Starry.png");
+  background-size: 87% 67%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+}
+.row.buttons div.starry.active {
+  background-color: #ef7f1a;
+}
+
+.row.buttons div.wall {
+  background-image: url("../images/Wall.png");
+  background-size: 70% 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+}
+.row.buttons div.wall.active {
+  background-color: #ef7f1a;
+}
+.row.buttons div.bluetooth {
+  display:none;
+  background-image: url("../images/Bluetooth_off.png");
+  background-size: 55% 60%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+}
+.row.buttons div.bluetooth.active {
+  background-size: 60% 60%;
+  background-image: url("../images/Bluetooth_on.png");
+  background-color: #ef7f1a;
+}
+
+.row.buttons div.vent {
+  background-image: url("../images/Vent.png");
+  background-size: 85% 75%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+
+}
+.row.buttons div.vent.active {
+    background-color: #ef7f1a;
+}
+
+.row.buttons div.infra {
+  min-width:31%;
+  position: relative;
+  background-color: #676766;
+}
+.row.buttons div.infra:before {
+  content: "INFRA";
+  position: absolute;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.row.buttons div.infra.active {
+  background-color: #ef7f1a;
+}
+
+.row.buttons div.finn {
+  min-width:31%;
+  position: relative;
+  background-color: #676766;
+}
+.row.buttons div.finn:before {
+  content: "FINN";
+  position: absolute;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.row.buttons div.finn.active {
+  background-color: #ef7f1a;
+}
+
+.row.buttons div.steam {
+  min-width:31%;
+  position: relative;
+  background-color: #676766;
+}
+.row.buttons div.steam:before {
+  content: "BIO";
+  position: absolute;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.row.buttons div.steam.active {
+  background-color: #ef7f1a;
+}
+
+.row.buttons div.stop {
+  background-image: url("../images/Stop.png");
+  background-size: 50px 55px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+}
+.row.buttons div.stop.active {
+  background-color: #ef7f1a;
+}
+
+.row.buttons div.room {
+  background-image: url("../images/Room.png");
+  background-size: 50px 60px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #676766;
+}
+.row.buttons div.room.active {
+  background-color: #ef7f1a;
+}
+
+.control {
+  height: 100%;
+    padding: 0;
+    margin: 0;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+input[data-type="range"] {
+  display:none;
+}
+.drum_container {
+  position:relative;
+  padding-left: 10px;
+  color: #f8ac5e;
+  font-size:30px;
+}
+.error {
+  color: red;
+}
+.drum_container span, .venttimer span {
+  cursor:pointer;
+  font-weight: bold;
+  position: relative;
+  top:0px;
+  left:0px;
+}
+.drum_container .drum-wrapper {
+  position:absolute;
+  top:-33px;
+  left:0px;
+}
+table, tbody, tr {
+    display: block;
+}
+td {
+  text-align: right;
+}
+td img {
+  height:auto;
+  width: 60px;
+  min-width: 60px;
+}
+span[measured] {
+  color: #e31e25;
+}
+.drum_container.venttimer {
+  float:right;
+  margin-right:10px;
+  position:absolute;
+  right: 0px;
+  font-size:25px;
+  display:none;
+}
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  outline: none;
+  transition: 0.4s;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  display: none;
+  overflow: hidden;
+}
+#stateTable {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+}
+#stateTable div {
+  flex-grow: 1;
+   flex: 1 1 30%;
+}
+.steps {
+  padding: 10px;
+  background: transparent;
+  color: #d77217;
+}
+.btn.btn-primary {
+  background: #676766;
+  border: none;
+}
+.btn.btn-primary:focus, .btn.btn-primary:disabled {
+  background: #d77217;
+  border: none;
+}
+.progress-bar-grey {
+  background-color: #676766 !important;
+}
+.progress-bar-orange {
+    background-color: #d77217 !important;
+}
+#steps_tab .nav-item {
+  width: 25%;
+  text-align:center;
+}
+.tab-pane.fade.steps {
+  display: none;
+}
+.tab-pane.fade.steps.active.show {
+  display: block;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+  background-color: #ef7f1a;
+}
+.nav-link, .nav-link:hover {
+  color:white;
+  background-color: #676766;
+}
+.btn, .nav-link {
+  letter-spacing: 0px;
+
+}
+.swal2-actions button {
+  display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-right: 5px;
+    border-radius: .25rem;
+    letter-spacing: 2px;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    cursor:pointer;
+}
+.swal2-cancel.button_left.large:hover {
+  color: #ef7f1a;
+}
+.swal2-confirm.button_right.large:hover {
+  color: #676766;
+}
+.swal2-cancel.button_left.large {
+  color: #fff;
+  background-color: #676766;
+
+}
+.swal2-confirm.button_right.large {
+  color: #fff;
+  background-color: #ef7f1a;
+}

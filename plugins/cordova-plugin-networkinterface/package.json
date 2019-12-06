@@ -1,0 +1,67 @@
+{
+  "_from": "git+https://github.com/salbahra/NetworkInterfacePlugin.git",
+  "_id": "cordova-plugin-networkinterface@2.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/cordova-plugin-networkinterface",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "git+https://github.com/salbahra/NetworkInterfacePlugin.git",
+    "rawSpec": "git+https://github.com/salbahra/NetworkInterfacePlugin.git",
+    "saveSpec": "git+https://github.com/salbahra/NetworkInterfacePlugin.git",
+    "fetchSpec": "https://github.com/salbahra/NetworkInterfacePlugin.git",
+    "gitCommittish": null
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/salbahra/NetworkInterfacePlugin.git#e558143dc373c4192422682b8a56d5503ea62b2e",
+  "_spec": "git+https://github.com/salbahra/NetworkInterfacePlugin.git",
+  "_where": "/var/www/saunaapp",
+  "author": {
+    "name": "Samer Albahra, tombolaLtd"
+  },
+  "bugs": {
+    "url": "https://github.com/salbahra/cordova-plugin-networkinterface/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-networkinterface",
+    "platforms": [
+      "ios",
+      "android",
+      "browser",
+      "windows"
+    ]
+  },
+  "deprecated": false,
+  "description": "This plugin allows your application to retrieve the local wifi address and http proxy information.",
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.1.0"
+    }
+  ],
+  "homepage": "https://github.com/salbahra/cordova-plugin-networkinterface#readme",
+  "keywords": [
+    "local",
+    "ip",
+    "wifi",
+    "network",
+    "proxy",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android",
+    "cordova-browser",
+    "cordova-windows"
+  ],
+  "license": "MIT",
+  "name": "cordova-plugin-networkinterface",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salbahra/cordova-plugin-networkinterface.git"
+  },
+  "version": "2.0.0"
+}

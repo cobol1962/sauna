@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2017 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="210mm" height="297mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 21000 29700"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#FEFEFE;stroke-width:50}
+    .str1 {stroke:#FEFEFE;stroke-width:40}
+    .fil1 {fill:#FEFEFE}
+    .fil0 {fill:#F7AC5E}
+    .fil2 {fill:#EF7F1A}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0 str0" x="9190" y="9202" width="1140" height="1500"/>
+  <g id="_2035699527136">
+   <path class="fil0 str1" d="M9875 10204c12,-42 37,-79 70,-108 62,-52 101,-131 101,-219 0,-162 -134,-296 -299,-287 -147,6 -266,131 -271,279 -2,92 37,173 101,227 35,29 60,67 72,108l225 0 0 0z"/>
+   <path class="fil1" d="M9735 10209l19 0 -83 -310c2,0 4,0 6,0 10,0 21,-4 29,-13 4,-4 8,-6 14,-6 6,0 10,2 14,6 14,17 39,17 54,0 4,-4 8,-6 14,-6 4,0 10,2 14,6 8,8 17,13 29,13 2,0 4,0 6,0l-81 310 19 0 85 -325c0,-4 0,-8 -4,-10 -4,-2 -8,0 -10,2 -4,4 -8,6 -12,6 -6,0 -10,-2 -17,-6 -8,-8 -17,-12 -27,-12 -10,0 -19,4 -27,12 -8,8 -21,8 -29,0 -6,-8 -17,-12 -27,-12l0 0c-10,0 -21,4 -27,12 -4,4 -10,6 -17,6 -4,0 -10,-2 -12,-6 -2,-2 -6,-4 -10,-2 -4,2 -6,6 -4,10l83 325z"/>
+   <path class="fil1" d="M9698 10396c10,25 35,44 64,44 29,0 54,-19 64,-44l-128 0z"/>
+   <path class="fil2" d="M9838 10398l-151 0c-21,0 -37,-17 -37,-37l0 -158 225 0 0 158c0,21 -17,37 -37,37z"/>
+   <path class="fil1" d="M9873 10281l-223 0c-12,0 -23,-10 -23,-23l0 0c0,-13 10,-23 23,-23l223 0c12,0 23,10 23,23l0 0c0,12 -10,23 -23,23z"/>
+   <path class="fil1" d="M9873 10354l-223 0c-12,0 -23,-10 -23,-23l0 0c0,-12 10,-23 23,-23l223 0c12,0 23,10 23,23l0 0c0,12 -10,23 -23,23z"/>
+  </g>
+ </g>
+</svg>

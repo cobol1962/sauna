@@ -1,0 +1,63 @@
+{
+  "_from": "cordova-plugin-wifiinfo@0.0.2",
+  "_id": "cordova-plugin-wifiinfo@0.0.2",
+  "_inBundle": false,
+  "_integrity": "sha512-BKnjxH+GgdvU8hWsb9VVGaiSOyWPKUqPiiJT1iyn49YgijTeEL49F1TavBBFWPIrjn890DVuUDDjZGgyTlY6Kg==",
+  "_location": "/cordova-plugin-wifiinfo",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-wifiinfo@0.0.2",
+    "name": "cordova-plugin-wifiinfo",
+    "escapedName": "cordova-plugin-wifiinfo",
+    "rawSpec": "0.0.2",
+    "saveSpec": null,
+    "fetchSpec": "0.0.2"
+  },
+  "_requiredBy": [
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-wifiinfo/-/cordova-plugin-wifiinfo-0.0.2.tgz",
+  "_shasum": "cd65973ff832797fd7a2f892cf8003f3855567f8",
+  "_spec": "cordova-plugin-wifiinfo@0.0.2",
+  "_where": "D:\\sauna",
+  "author": {
+    "name": "Eric McNiece",
+    "url": "https://github.com/emcniece"
+  },
+  "bugs": {
+    "url": "https://github.com/emcniece/cordova-plugin-wifiinfo/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Cordova plugin for gathering WiFi network information",
+  "engines": {
+    "cordovaDependencies": {
+      "0.0.2": {
+        "cordova-ios": ">4.3.0"
+      }
+    }
+  },
+  "homepage": "https://github.com/emcniece/cordova-plugin-wifiinfo#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova",
+    "plugin",
+    "wifi",
+    "info"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "name": "cordova-plugin-wifiinfo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emcniece/cordova-plugin-wifiinfo.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.0.2"
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2017 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="210mm" height="297mm" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 21000 29700"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <font id="FontID0" horiz-adv-x="666" font-variant="normal" style="fill-rule:nonzero" font-weight="400">
+	<font-face 
+		font-family="Arial">
+		<font-face-src>
+			<font-face-name name="Arial"/>
+		</font-face-src>
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="I" horiz-adv-x="277" d="M93.0125 0l0 716.002 94.9968 0 0 -716.002 -94.9968 0z"/>
+   <glyph unicode="F" horiz-adv-x="610" d="M81.9928 0l0 716.002 482.992 0 0 -84.0125 -387.995 0 0 -222.982 336.014 0 0 -84.0125 -336.014 0 0 -324.995 -94.9968 0z"/>
+   <glyph unicode="N" horiz-adv-x="722" d="M76.0045 0l0 716.002 97.3354 0 375.664 -562.008 0 562.008 90.9928 0 0 -716.002 -97.3354 0 -375.664 562.008 0 -562.008 -90.9928 0z"/>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"Arial";font-variant:normal;font-weight:normal;src:url("#FontID0") format(svg)}
+    .str0 {stroke:#FEFEFE;stroke-width:50}
+    .str1 {stroke:#FFFEFA;stroke-width:20}
+    .str2 {stroke:#C7212C;stroke-width:20}
+    .fil4 {fill:none}
+    .fil1 {fill:#FEFEFE}
+    .fil5 {fill:#898989}
+    .fil2 {fill:#FFFEFA}
+    .fil3 {fill:#FEFCF9}
+    .fil0 {fill:#EF7F1A}
+    .fil6 {fill:#C7212C}
+    .fnt0 {font-weight:normal;font-size:282.22px;font-family:'Arial'}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0 str0" x="2054" y="17004" width="1140" height="1500"/>
+  <text x="2295" y="18374"  class="fil1 fnt0">FINN</text>
+  <g id="_1999337947760">
+   <rect class="fil1" x="2391" y="17677" width="465" height="360"/>
+   <ellipse class="fil2" cx="2495" cy="17507" rx="99" ry="26"/>
+   <ellipse class="fil2" cx="2660" cy="17483" rx="73" ry="14"/>
+   <ellipse class="fil2" cx="2487" cy="17578" rx="87" ry="22"/>
+   <path class="fil3" d="M2753 17578c43,0 79,19 79,42 0,23 -35,42 -79,42 -43,0 -57,-8 -75,-13 -9,-3 -13,-51 -3,-58 14,-10 53,-12 78,-12z"/>
+   <path class="fil2" d="M2467 17613c24,1 40,4 41,15 1,6 5,20 -4,25 -15,7 -6,5 -25,4 -20,-1 -51,3 -69,-2 -9,-3 -19,-22 -9,-29 11,-8 -6,-13 66,-12z"/>
+   <path class="fil3" d="M2616 17585c7,0 37,24 39,34 1,6 -4,17 -13,22 -15,7 -24,14 -43,13 -20,-1 -27,-2 -44,-7 -9,-3 -11,-15 -3,-24 9,-9 41,-40 65,-37z"/>
+   <path class="fil2" d="M2822 17501c7,0 31,6 32,16 1,6 4,20 -1,27 -9,13 -23,24 -41,23 -20,-1 -29,-4 -38,-15 -6,-8 -24,-42 -15,-50 9,-9 39,-3 63,0z"/>
+   <path class="fil1" d="M2684 17510c7,0 68,0 78,36 -9,17 -36,12 -46,17 -15,7 -50,19 -69,17 -20,-1 -26,-12 -44,-17 -9,-3 -1,-36 8,-45 9,-9 50,-11 73,-8z"/>
+   <path class="fil4 str1" d="M2565 17163c-87,28 -68,68 -29,123 26,48 -6,90 -26,110"/>
+   <path class="fil4 str1" d="M2661 17201c-87,28 -68,68 -29,123 26,48 -6,90 -26,110"/>
+   <path class="fil4 str1" d="M2759 17164c-87,28 -68,68 -29,123 26,48 -6,90 -26,110"/>
+  </g>
+  <g id="_1999337943408">
+   <rect class="fil5" x="2391" y="17677" width="465" height="360"/>
+   <ellipse class="fil6" cx="2495" cy="17507" rx="99" ry="26"/>
+   <ellipse class="fil6" cx="2660" cy="17483" rx="73" ry="14"/>
+   <ellipse class="fil6" cx="2487" cy="17578" rx="87" ry="22"/>
+   <path class="fil6" d="M2753 17578c43,0 79,19 79,42 0,23 -35,42 -79,42 -43,0 -57,-8 -75,-13 -9,-3 -13,-51 -3,-58 14,-10 53,-12 78,-12z"/>
+   <path class="fil6" d="M2467 17613c24,1 40,4 41,15 1,6 5,20 -4,25 -15,7 -6,5 -25,4 -20,-1 -51,3 -69,-2 -9,-3 -19,-22 -9,-29 11,-8 -6,-13 66,-12z"/>
+   <path class="fil6" d="M2616 17585c7,0 37,24 39,34 1,6 -4,17 -13,22 -15,7 -24,14 -43,13 -20,-1 -27,-2 -44,-7 -9,-3 -11,-15 -3,-24 9,-9 41,-40 65,-37z"/>
+   <path class="fil6" d="M2822 17501c7,0 31,6 32,16 1,6 4,20 -1,27 -9,13 -23,24 -41,23 -20,-1 -29,-4 -38,-15 -6,-8 -24,-42 -15,-50 9,-9 39,-3 63,0z"/>
+   <path class="fil6" d="M2684 17510c7,0 68,0 78,36 -9,17 -36,12 -46,17 -15,7 -50,19 -69,17 -20,-1 -26,-12 -44,-17 -9,-3 -1,-36 8,-45 9,-9 50,-11 73,-8z"/>
+   <path class="fil4 str2" d="M2565 17163c-87,28 -68,68 -29,123 26,48 -6,90 -26,110"/>
+   <path class="fil4 str2" d="M2661 17201c-87,28 -68,68 -29,123 26,48 -6,90 -26,110"/>
+   <path class="fil4 str2" d="M2759 17164c-87,28 -68,68 -29,123 26,48 -6,90 -26,110"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,61 @@
+{
+  "_args": [
+    [
+      "cordova-plugin-socket-tcp@1.6.0",
+      "/var/www/saunaapp"
+    ]
+  ],
+  "_from": "cordova-plugin-socket-tcp@1.6.0",
+  "_id": "cordova-plugin-socket-tcp@1.6.0",
+  "_inBundle": false,
+  "_integrity": "sha512-0xVu2VktyVd1I1fk3opw+p4m8mwoXsJGrpRZT2FBzB4rkBkVTph35NE/z+3+VAO/UrZ4i53w66PKvfxRqFZVRg==",
+  "_location": "/cordova-plugin-socket-tcp",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "cordova-plugin-socket-tcp@1.6.0",
+    "name": "cordova-plugin-socket-tcp",
+    "escapedName": "cordova-plugin-socket-tcp",
+    "rawSpec": "1.6.0",
+    "saveSpec": null,
+    "fetchSpec": "1.6.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-socket-tcp/-/cordova-plugin-socket-tcp-1.6.0.tgz",
+  "_spec": "1.6.0",
+  "_where": "/var/www/saunaapp",
+  "author": {
+    "name": "blocshop"
+  },
+  "bugs": {
+    "url": "https://github.com/kitolog/sockets-for-cordova/issues"
+  },
+  "cordova": {
+    "platforms": [
+      "ios",
+      "android",
+      "wp8"
+    ]
+  },
+  "description": "This Cordova plugin provides JavaScript API, that allows you to communicate with server through TCP protocol. Currently we support these platforms: iOS, Android, WP8.",
+  "homepage": "https://github.com/kitolog/sockets-for-cordova#readme",
+  "keywords": [
+    "cordova",
+    "sockets",
+    "tcp",
+    "network",
+    "cordova-ios",
+    "cordova-wp8",
+    "cordova-android"
+  ],
+  "license": "Apache-2.0",
+  "name": "cordova-plugin-socket-tcp",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitolog/sockets-for-cordova.git"
+  },
+  "version": "1.6.0"
+}

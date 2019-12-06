@@ -1,0 +1,17 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "SENSUM SZAUNA",
+  "short_name": "SENSUM SZAUNA",
+  "version": "io.cordova.hellocordova",
+  "description": "Keep your szauna under control from anywhere.",
+  "author": "Sensum Szauna team",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "start_url": "index.html"
+}
