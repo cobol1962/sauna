@@ -49,7 +49,7 @@
     <engine name="android" spec="^7.1.4" />
     <engine name="ios" spec="^4.5.5" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
-    <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
+    <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />   
     <plugin name="cordova-plugin-socket-tcp" spec="~1.6.0" />
     <plugin name="cordova-plugin-wifiinfo" />
-</widget>   
+</widget>
