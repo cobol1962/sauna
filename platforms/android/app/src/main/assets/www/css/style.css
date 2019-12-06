@@ -13,7 +13,8 @@ body {
   padding-right:10px;
   font-family: 'Babes', Arial, sans-serif;
  letter-spacing: 4px;
-  width:500px;
+max-width: 100%;
+overflow: hidden;
   margin: 0px auto;
   padding: 0;
 }
