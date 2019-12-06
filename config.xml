@@ -28,7 +28,7 @@
     <platform name="ios">
         <splash height="480" src="res/screen/ios/Saunaicon2.jpg" width="320" />
         <splash height="960" src="res/screen/ios/Saunaicon2.jpg" width="640" />
-        <splash height="1024" src="res/screen/ios/Saunaicon2.jpg" width="768" />
+        <splash height="1024" src="res/screen/ios/Saunaicon2.jpg" width="768" /> 
         <splash height="2048" src="res/screen/ios/Saunaicon2.jpg" width="1536" />
         <splash height="768" src="res/screen/ios/Saunaicon2.jpg" width="1024" />
         <splash height="1536" src="res/screen/ios/Saunaicon2.jpg" width="2048" />
