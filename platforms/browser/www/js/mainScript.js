@@ -183,6 +183,8 @@ function checkStorage() {
   if (localStorage.url === undefined || localStorage.password === undefined || !setupDone) {
     setupDone = false;
     $.LoadingOverlay("hide");
+    $("header .row.title").addClass("active");
+    $("#saunaName").html("SETTINGS");
     $("[main]").hide();
     $("[setup]").show();
   } else {
