@@ -49,7 +49,9 @@ var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
   delete localStorage.currentChangeNumber;
-
+  jQuery.validator.addMethod("isOldPass", function(value, element) {
+    return (element.value == localStorage.password);
+  }, "Please enter old password");
  $("[main]").hide();
   $( "#setupSauna" ).validate({
     rules: {
@@ -59,22 +61,76 @@ $(document).ready(function() {
       },
       pwd: {
         required: true,
-        minlength: 8
+        minlength: 6
       }
     },
     submitHandler: function(form) {
 
-      localStorage.url = $("#url").val();
+      localStorage.url = $("#url").val().split("(")[0].trim();
       if (localStorage.url.indexOf(".") > -1) {
         localStorage.mode = "url";
       } else {
         localStorage.mode = "socket";
       }
       localStorage.password = $("#pwd").val();
-      $("#url").val(localStorage.url);
+    //  $("#url").val(localStorage.url);
       $("#pwd").val(localStorage.password);
       setupDone = true;
       window.location.reload();
+    }
+  });
+
+  $( "#changePassword" ).validate({
+    rules: {
+      oldPwd: {
+        required: true,
+        isOldPass: true
+      },
+      newPwd: {
+        required: true,
+        maxlength : 10,
+        minlength : 6
+      },
+      cnfPwd: {
+        required: true,
+        equalTo: "#newPwd",
+        maxlength : 10,
+        minlength : 6
+      }
+    },
+    submitHandler: function(form) {
+      localStorage.currentChangeNumber++;
+      command = "changePassword";
+
+      var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",11," + $("#newPwd").val().trim().padStart(10, "0") + ",&&&";
+      if (localStorage.mode == "url") {
+
+        $.ajax({
+          url:  "http://" + localStorage.url + "/?settings=" + toSend,
+          type: "GET",
+          timeout: 3000,
+          statusCode: {
+
+          },
+          success: function(result){
+            showResults(result);
+
+          },
+          error: function() {
+            swal({
+              type: "warning",
+              text: "Something went wrong. Please try again."
+            })
+          }
+        });
+          } else {
+            var obj = {
+              action: "command",
+              parameters: toSend
+            }
+          ws.send(JSON.stringify(obj));
+        }
+
     }
   });
   if (localStorage.url === undefined) {
@@ -96,8 +152,9 @@ $(document).ready(function() {
     if (localStorage.settings === undefined) {
       localStorage.settings = [];
     }
+
     $("body").css({
-      maxWidth: $(window).width()
+      maxWidth: (($(window).width() < 500) ? $(window).width() : 500)
     });
     $("footer").css({
       width: $("body").width(),
@@ -154,18 +211,93 @@ for (i = 0; i < acc.length; i++) {
 }
   $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
     if (e.target.id != "step1_tab") {
-      $("#step1_tab").tab("show");
-      if (localStorage.connected) {
+      if (localStorage.connected == "false") {
         swal({
           type: "error",
           text: "You are not connected to any sauna. Please connect first."
+        }).then((result) => {
+          $("#step1_tab").tab("show");
         })
-        e.preventDefault();
-        e.stopPropagation();
       }
+    }
+
+    if (e.target.id == "step3_tab") {
+      if (localStorage.mode == "url") {
+        $("#switchNetwork").text("Cloud");
+        $("#switchNetwork").attr("mode", "url");
+      }
+      if (localStorage.mode == "socket") {
+        $("#switchNetwork").text("Local");
+        $("#switchNetwork").attr("mode","socket");
+      }
+    }
+    if (e.target.id == "step4_tab") {
+      localStorage.currentChangeNumber++;
+      command = "checkDomain";
+      var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
+      $.ajax({
+        url:  "http://" + localStorage.url + "/?settings=" + toSend,
+        type: "GET",
+        timeout: 3000,
+        statusCode: {
+
+        },
+        success: function(result){
+          showResults(result);
+
+        },
+        error: function() {
+          swal({
+            type: "warning",
+            text: "Something went wrong. Please try again."
+          })
+        }
+      });
     }
   })
 });
+function switchNetwork(btn) {
+  clearInterval(rint);
+  $(btn).attr("mode", localStorage.mode)
+  var md = $(btn).attr("mode");
+
+  if (md == "socket") {
+    localStorage.currentChangeNumber++;
+    command = "changeNetwork";
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",15,&&&";
+    var obj = {
+      action: "command",
+      parameters: toSend
+    }
+  //  ws.send(JSON.stringify(obj));
+    swal({
+      type: "info",
+      html: "Action can take 30 - 60 secs. Please be patient. <br />Time used: <strong id='scsp'></strong> secs.",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      showConfirmButton: false
+    });
+    var sc = 0;
+    var sint = setInterval(function() {
+      sc++;
+      $("#scsp").html(sc.toString().padStart(2, "0"));
+      if (sc > 60) {
+        clearInterval(sint);
+        swal.close();
+        swal({
+          type: "error",
+          text: "Somwthing went wrong. Please try again or contact support."
+        });
+      }
+    }, 1000)
+  } else {
+    localStorage.currentChangeNumber++;
+    command = "checkDomain";
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
+    $("#step4_tab").tab("show");
+  }
+}
 function startApp() {
   $("#control").show();
   $("#control").css({
@@ -181,6 +313,7 @@ function startApp() {
 
 function checkStorage() {
   if (localStorage.url === undefined || localStorage.password === undefined || !setupDone) {
+
     setupDone = false;
     $.LoadingOverlay("hide");
     $("header .row.title").addClass("active");
@@ -190,7 +323,7 @@ function checkStorage() {
   } else {
     $("[main]").hide();
     $("[setup]").hide();
-    $("#url").val(localStorage.url);
+    $("#url").val(localStorage.url + " (" + localStorage.name + ")");
     $("#pwd").val(localStorage.password);
     initializeDrums();
     continueStart();
@@ -198,7 +331,9 @@ function checkStorage() {
 }
 // start
 function continueStart() {
+    window.saunas = [];
   if (localStorage.mode == "url") {
+    $("#btn").attr("mode", "url");
         $.ajax({
           url:  "http://" + localStorage.url + "/GetValue",
           timeout: 3000,
@@ -209,7 +344,11 @@ function continueStart() {
               return false;
             }
             setTimeout(function() {
-              showResults(result);
+              localStorage.name = result.split(",")[3];
+              window.saunas.push( localStorage.url + ((localStorage.name !== undefined) ? " (" + localStorage.name + ")" : "")  )
+              $("#url").typeahead({ source: window.saunas });
+              localStorage.connected = true;
+                showResults(result);
               $.LoadingOverlay("hide");
               $("[main]").show();
               initialLoad = true;
@@ -217,6 +356,7 @@ function continueStart() {
               //  clearInterval(rint);
               localStorage.currentChangeNumber++;
               command = "checkMode";
+              clearInterval(rint);
               $.ajax({
                 url:  "http://" + localStorage.url + "/?settings=" + "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password + ",14,&&&",
                 type: "GET",
@@ -228,11 +368,7 @@ function continueStart() {
                 },
                 success: function(result){
                   showResults(result);
-                  if (rint == null) {
-                      rint = setInterval(function() {
-                        refresh();
-                      }, 2000);
-                    }
+
                 }
               });
               }
@@ -243,6 +379,7 @@ function continueStart() {
           }
         });
   } else {
+    $("#btn").attr("mode", "socket");
     ws = new ReconnectingWebSocket(localStorage.url);
     setTimeout(function() {
       if (ws.readyState == 0) {
@@ -263,6 +400,7 @@ function continueStart() {
       } else {
         $("[main]").show();
         initialLoad = true;
+        localStorage.connected = true;
       }
     }, 5000);
   }
@@ -724,7 +862,59 @@ function resultToObject(received) {
   }
 }
 function checkSettings(rcv) {
-
+  rint = setInterval(function() {
+    refresh();
+  }, 2000);
+  var rstr = rcv.join(",");
+  if (rstr.indexOf("WRG_PSW") > -1) {
+    $("[main]").hide();
+    $("[setup]").show();
+    swal({
+      type: "error",
+      text: "Please check password again"
+    }).then((result) => {
+      localStorage.connected = false;
+      $("header .row.title").addClass("active");
+      $("#saunaName").html("SETTINGS");
+      $("[main]").hide();
+      $("[setup]").show();
+      $("#step1_tab").tab("show");
+    })
+  }
+  if (command == "checkDomain") {
+    console.log(rcv);
+  
+    if (rcv[4] == "1") {
+      $("#dName").val(rcv[5] + "." + rcv[6] + "." + rcv[7] + ":" + rcv[8]);
+    } else {
+      $("#dName").val(rcv[5] + ":" + rcv[6])
+    }
+  }
+  if (command == "changeNetwork") {
+    if (rstr.indexOf("LOCAL_NTW_OK") > -1) {
+      localStorage.url = "";
+      localStorage.mode = "url";
+      $("#url").val("");
+      $("#pwd").val("");
+      $("#url").typeahead("destroy");
+      localStorage.password = "";
+      swal.close();
+      $("#step1_tab").tab("show");
+    }
+  }
+  if (command == "changePassword") {
+    if (rstr.indexOf("PSW_OK") > -1) {
+      swal({
+        type: "success",
+        text: "Password changed. Next time connect using new password."
+      })
+    } else {
+      swal({
+        type: "warning",
+        text: "Something went wrong. Please try again."
+      })
+    }
+  }
   if (command == "checkMode") {
     switch(rcv[5]) {
       case "1":
@@ -777,6 +967,7 @@ function checkSettings(rcv) {
       $(".wall").hide();
       $(".bluetooth").show();
     }
+
   }
   var pp = parseInt((($("body").width() - 8) / 5) / 1);
   var rt = parseFloat($("body").width() / 480);
@@ -1088,6 +1279,7 @@ function trySet() {
               checkStorage();
           });
         }
+
         if (result == "" && setupDone && c) {
           setTimeout(function () {
             trySet();
@@ -1104,6 +1296,7 @@ function trySet() {
         }
       },
       error: function() {
+
         //  clearInterval(rint);
         //  trySet();
       }
@@ -1269,7 +1462,9 @@ function startScan(ips, ip) {
     success: function(result){
 
       if (result.indexOf("$$$1") == 0) {
-        window.saunas.push(ips + ip);
+        var r = result.split(",");
+        localStorage.name = r[3];
+        window.saunas.push( ips + ip + " (" + r[3] + ")");
       }
       ip++;
       if (ip > 127) {
@@ -1290,6 +1485,19 @@ function startScan(ips, ip) {
 }
 function listSaunas() {
 //  $("#scan").hide();
+  try {
+    $("#url").typeahead("destroy");
+  } catch(e) {
+
+  }
   $("#buttonScan").prop("disabled", false);
-  alert(JSON.stringify(window.saunas));
+  if (window.saunas.length == 0) {
+    swal({
+      type: "warning",
+      text: "No sauna detected on local network. Please check network or settings."
+    })
+    $("#url").typeahead({ source: window.saunas });
+    retun;
+  }
+  $("#url").typeahead({ source: window.saunas });
 }
