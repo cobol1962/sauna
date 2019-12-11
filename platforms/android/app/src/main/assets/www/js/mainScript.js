@@ -883,7 +883,7 @@ function checkSettings(rcv) {
   }
   if (command == "checkDomain") {
     console.log(rcv);
-  
+
     if (rcv[4] == "1") {
       $("#dName").val(rcv[5] + "." + rcv[6] + "." + rcv[7] + ":" + rcv[8]);
     } else {
@@ -1188,10 +1188,12 @@ var att = 1;
 var  failTimeout = null;
 var err = false;
 
-
+var fails = null;
 function trySet() {
 //  return;
-
+  if (fails == null) {
+    fails = 0;
+  }
   settingsStarted = true;
   //clearInterval(rint);
   rint = null;
@@ -1260,8 +1262,20 @@ function trySet() {
       statusCode: {
         500: function() {
             setTimeout(function () {
+              fails++;
+              if (fails > 10) {
+                swal({
+                  type: "error",
+                  text: "Communication error"
+                }).then((result) => {
+                  $("[main]").hide();
+                  $("[setup]").show();
+                  $("#step1_tab").tab("show");
+
+                });
+              }
               trySet();
-            }, 5000);
+            }, 2000);
          }
       },
       success: function(result){
@@ -1282,11 +1296,25 @@ function trySet() {
 
         if (result == "" && setupDone && c) {
           setTimeout(function () {
+            fails++;
+            fails++;
+            if (fails > 10) {
+              swal({
+                type: "error",
+                text: "Communication error"
+              }).then((result) => {
+                $("[main]").hide();
+                $("[setup]").show();
+                $("#step1_tab").tab("show");
+
+              });
+            }
             trySet();
           }, 2000);
         } else {
 
           clearTimeout(failTimeout);
+              fails = null;
               noChangeState = false;
               settingsStarted = false;
               $('#infrafill_div').find('[realvalue]').show();
@@ -1491,6 +1519,7 @@ function listSaunas() {
 
   }
   $("#buttonScan").prop("disabled", false);
+
   if (window.saunas.length == 0) {
     swal({
       type: "warning",
@@ -1499,5 +1528,19 @@ function listSaunas() {
     $("#url").typeahead({ source: window.saunas });
     retun;
   }
+  swal({
+    type: "info",
+    html: window.saunas.length + " sauna(s) detected. " + ((window.saunas.length > 1) ? " Select one." : "") + "<br /><form><select style='margin-top: 5px;' class='form-control' id='saunas'></select></form>",
+    allowOutsideClick: false,
+    allowEscapeKey: false,
+    allowEnterKey: false,
+    showConfirmButton: true
+  }).then((result) => {
+    $("#url").val($("#saunas").val());
+    $("#step1_tab").tab("show");
+  });
+  $.each(window.saunas, function() {
+    $("<option value='" + this + "'>" + this + "</option>").appendTo($("#saunas"));
+  })
   $("#url").typeahead({ source: window.saunas });
 }
