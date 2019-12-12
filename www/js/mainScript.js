@@ -1590,7 +1590,7 @@ function changeDomain() {
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,0," + us[0] + "," + us[1] + ",&&&";
   } else {
     var uss = us.split(".");
-    alert(us);
+  
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
   }
   $("#url").val(u);
