@@ -1298,14 +1298,6 @@ function trySet() {
           });
         }
 
-        if (result == "" && setupDone && c) {
-          localStorage.currentChangeNumber--;
-          rint = setInterval(function() {
-            refresh();
-          }, 2000);
-
-        } else {
-
           clearTimeout(failTimeout);
           fails = null;
           noChangeState = false;
@@ -1317,13 +1309,24 @@ function trySet() {
           rint = setInterval(function() {
             refresh();
           }, 2000);
-        }
+
       },
       error: function() {
-        localStorage.currentChangeNumber--;
-        rint = setInterval(function() {
-          refresh();
-        }, 2000);
+        fails++;
+        if (fails > 3) {
+          swal({
+            type: "error",
+            text: "Communication error. Command failed. Try again."
+          }).then((result) => {
+            settingsStarted = false;
+            localStorage.currentChangeNumber--;
+            rint = setInterval(function() {
+              refresh();
+            }, 1000);
+          });
+        } else {
+          trySet();
+        }
       }
     });
     } else {
@@ -1489,9 +1492,9 @@ function startScan(ips, ip) {
       if (result.indexOf("$$$1") == 0) {
         var r = result.split(",");
         localStorage.name = r[3];
-        var ss = ips + ip + " (" + r[3] + ")";
+        var ss = ips + ip + " (" + r[2] + ")";
         if (window.saunas.indexOf(ss) == -1) {
-          window.saunas.push( ips + ip + " (" + r[3] + ")");
+          window.saunas.push( ips + ip + " (" + r[2] + ")");
         }
       }
       ip++;
