@@ -295,6 +295,7 @@ function switchNetwork(btn) {
     localStorage.currentChangeNumber++;
     command = "checkDomain";
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
+    console.log(toSend);
     $("#step4_tab").tab("show");
   }
 }
@@ -320,6 +321,7 @@ function checkStorage() {
     $("#saunaName").html("SETTINGS");
     $("[main]").hide();
     $("[setup]").show();
+    clearInterval(rint);
   } else {
     $("[main]").hide();
     $("[setup]").hide();
@@ -395,7 +397,7 @@ function continueStart() {
             $("#saunaName").html("SETTINGS");
             $("[main]").hide();
             $("[setup]").show();
-
+            clearInterval(rint);
         });
       } else {
         $("[main]").show();
@@ -820,6 +822,7 @@ function connError(count, interval) {
         $("#saunaName").html("SETTINGS");
         $("[main]").hide();
         $("[setup]").show();
+        clearInterval(rint);
       }
     });
   } else {
@@ -862,13 +865,16 @@ function resultToObject(received) {
   }
 }
 function checkSettings(rcv) {
-  rint = setInterval(function() {
-    refresh();
-  }, 2000);
+  if (!$("[setup]").is(":visible")) {
+     rint = setInterval(function() {
+      refresh();
+    }, 2000);
+  }
   var rstr = rcv.join(",");
   if (rstr.indexOf("WRG_PSW") > -1) {
     $("[main]").hide();
     $("[setup]").show();
+    clearInterval(rint);
     swal({
       type: "error",
       text: "Please check password again"
@@ -878,6 +884,7 @@ function checkSettings(rcv) {
       $("#saunaName").html("SETTINGS");
       $("[main]").hide();
       $("[setup]").show();
+      clearInterval(rint);
       $("#step1_tab").tab("show");
     })
   }
@@ -907,6 +914,19 @@ function checkSettings(rcv) {
       swal({
         type: "success",
         text: "Password changed. Next time connect using new password."
+      })
+    } else {
+      swal({
+        type: "warning",
+        text: "Something went wrong. Please try again."
+      })
+    }
+  }
+  if (command == "setDomain") {
+    if (rstr.indexOf("LOCAL_NTW_OK") > -1 || rstr.indexOf("CLOUD_OK") > -1) {
+      swal({
+        type: "success",
+        text: "Set domain success."
       })
     } else {
       swal({
@@ -1270,6 +1290,7 @@ function trySet() {
                 }).then((result) => {
                   $("[main]").hide();
                   $("[setup]").show();
+                  clearInterval(rint);
                   $("#step1_tab").tab("show");
 
                 });
@@ -1306,6 +1327,7 @@ function trySet() {
           $("#infrafill1_value").show();
           $("#infrafill2_value").show();
           refreshState = true;
+          resultToObject(result);
           rint = setInterval(function() {
             refresh();
           }, 2000);
@@ -1546,4 +1568,56 @@ function listSaunas() {
     $("<option value='" + this + "'>" + this + "</option>").appendTo($("#saunas"));
   })
   $("#url").typeahead({ source: window.saunas });
+}
+function checkReading() {
+  if ($("[setup]").is(":visible")) {
+
+    clearInterval(rint);
+  } else {
+      rint = setInterval(function() {
+        refresh();
+      }, 2000);
+    }
+}
+function changeDomain() {
+
+  var md = $("#switchNetwork").attr("mode");
+  var u = $("#dName").val();
+  var us = u.split(":");
+  command = "setDomain";
+  localStorage.currentChangeNumber++;
+  if (md == "url") {
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + "0,13," + us[0] + "," + us[1] + ",&&&";
+  } else {
+    var uss = us.split(".");
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + "1,13," + uss[0] + "," + uss[1] + "," + uss[2] + "," + us[1] + ",&&&";
+  }
+  $("#url").val(u);
+  if (localStorage.mode == "url") {
+
+    $.ajax({
+      url:  "http://" + localStorage.url + "/?settings=" + toSend,
+      type: "GET",
+      timeout: 3000,
+      statusCode: {
+
+      },
+      success: function(result){
+        showResults(result);
+
+      },
+      error: function() {
+        swal({
+          type: "warning",
+          text: "Something went wrong. Please try again."
+        })
+      }
+    });
+      } else {
+        var obj = {
+          action: "command",
+          parameters: toSend
+        }
+      ws.send(JSON.stringify(obj));
+    }
 }
