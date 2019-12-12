@@ -1587,10 +1587,10 @@ function changeDomain() {
   command = "setDomain";
   localStorage.currentChangeNumber++;
   if (md == "url") {
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + "0,13," + us[0] + "," + us[1] + ",&&&";
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13," + us[0] + "," + us[1] + ",&&&";
   } else {
     var uss = us.split(".");
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + "1,13," + uss[0] + "," + uss[1] + "," + uss[2] + "," + us[1] + ",&&&";
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13," + uss[0] + "," + uss[1] + "," + uss[2] + "," + us[1] + ",&&&";
   }
   $("#url").val(u);
   if (localStorage.mode == "url") {
