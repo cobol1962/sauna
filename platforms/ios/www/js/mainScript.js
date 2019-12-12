@@ -856,7 +856,7 @@ function resultToObject(received) {
     saunaSettings[k] = rcv[ind].toString();
     ind++;
   }
-  if(rcv[1] ==  localStorage.currentChangeNumber && !drumStarted) {
+  if((rcv[1] ==  localStorage.currentChangeNumber && !drumStarted)) {
 //    refresh();
     drawSauna();
   }
@@ -1195,8 +1195,8 @@ function trySet() {
     fails = 0;
   }
   settingsStarted = true;
-  //clearInterval(rint);
-  rint = null;
+  clearInterval(rint);
+
   var str = {};
   if (saunaSettings.bySaunaTimer === undefined) {
     saunaSettings.bySaunaTimer = "00:30:00";
@@ -1274,7 +1274,11 @@ function trySet() {
 
                 });
               }
-              trySet();
+              localStorage.currentChangeNumber--;
+              rint = setInterval(function() {
+                refresh();
+              }, 2000);
+
             }, 2000);
          }
       },
@@ -1295,38 +1299,31 @@ function trySet() {
         }
 
         if (result == "" && setupDone && c) {
-          setTimeout(function () {
-            fails++;
-            fails++;
-            if (fails > 10) {
-              swal({
-                type: "error",
-                text: "Communication error"
-              }).then((result) => {
-                $("[main]").hide();
-                $("[setup]").show();
-                $("#step1_tab").tab("show");
-
-              });
-            }
-            trySet();
+          localStorage.currentChangeNumber--;
+          rint = setInterval(function() {
+            refresh();
           }, 2000);
+
         } else {
 
           clearTimeout(failTimeout);
-              fails = null;
-              noChangeState = false;
-              settingsStarted = false;
-              $('#infrafill_div').find('[realvalue]').show();
-              $("#infrafill1_value").show();
-              $("#infrafill2_value").show();
-              refreshState = true;
+          fails = null;
+          noChangeState = false;
+          settingsStarted = false;
+          $('#infrafill_div').find('[realvalue]').show();
+          $("#infrafill1_value").show();
+          $("#infrafill2_value").show();
+          refreshState = true;
+          rint = setInterval(function() {
+            refresh();
+          }, 2000);
         }
       },
       error: function() {
-
-        //  clearInterval(rint);
-        //  trySet();
+        localStorage.currentChangeNumber--;
+        rint = setInterval(function() {
+          refresh();
+        }, 2000);
       }
     });
     } else {
@@ -1492,7 +1489,10 @@ function startScan(ips, ip) {
       if (result.indexOf("$$$1") == 0) {
         var r = result.split(",");
         localStorage.name = r[3];
-        window.saunas.push( ips + ip + " (" + r[3] + ")");
+        var ss = ips + ip + " (" + r[3] + ")";
+        if (window.saunas.indexOf(ss) == -1) {
+          window.saunas.push( ips + ip + " (" + r[3] + ")");
+        }
       }
       ip++;
       if (ip > 127) {
