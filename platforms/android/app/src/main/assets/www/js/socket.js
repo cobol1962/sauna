@@ -1,7 +1,9 @@
 var customerSession = null;
 var firstTouch = true;
 function ReconnectingWebSocket(saunaid) {
-    var url = localStorage.url + "/?saunaid=" + saunaid;
+    var uu = localStorage.url.split(":")[1];
+
+    var url = localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
     this.debug = false;
     this.reconnectInterval = 1000;
     this.timeoutInterval = 5000;
@@ -21,7 +23,7 @@ function ReconnectingWebSocket(saunaid) {
         if (url.indexOf("?reconnect=") > -1) {
             reconnect = true;
         }
-        url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url + "/?saunaid=" + saunaid;
+        url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
 
     }
 
@@ -35,6 +37,7 @@ function ReconnectingWebSocket(saunaid) {
     };
 
     this.onmessage = function (e) {
+
       var obj = $.parseJSON(e.data);
       if (obj.action == "parameters") {
         try {
@@ -50,10 +53,11 @@ function ReconnectingWebSocket(saunaid) {
             localStorage.currentChangeNumber = pr[1];
             var obj = {
               action: "command",
-              parameters: "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password + ",14,&&&"
+              parameters: "$$$1," + localStorage.currentChangeNumber + "," + localStorage.saunaid + "," + localStorage.password.trim().padStart(10,"0") + ",14,&&&"
             }
             ws.send(JSON.stringify(obj));
           }
+
           if (pr[1] == localStorage.currentChangeNumber && !drumStarted) {
             noChangeState = false;
             settingsStarted = false;
@@ -84,7 +88,7 @@ function ReconnectingWebSocket(saunaid) {
             }
 
         } else {
-            url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url + "/?saunaid=" + localStorage.url;
+            url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
         }
         ws = new WebSocket(url, this.protocols);
 

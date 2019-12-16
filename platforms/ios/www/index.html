@@ -105,7 +105,12 @@
                   <label for="pwd">Password:</label>
                   <input type="password" class="form-control" id="pwd" name="pwd">
                 </div>
-                <button  type="button" onclick="$('#setupSauna').submit();return false;" style="float:right;" class="btn btn-primary">Submit</button>
+                <div class="form-group">
+                  <label for="saunaid">Sauna id:</label>
+                  <input type="text" class="form-control" id="saunaid" name="saunaid">
+                </div>
+                <button  type="button" onclick="localStorage.mode='url';$('#setupSauna').submit();return false;" style="float:left;" class="btn btn-primary">Connect local</button>
+                <button  type="button" onclick="localStorage.mode='socket';$('#setupSauna').submit();return false;" style="float:right;" class="btn btn-primary">Connect cloud</button>
               </form>
             </div>
 

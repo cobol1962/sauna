@@ -48,6 +48,7 @@ currentSettings = [];
 var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
+  //localStorage.mode = "url";
   delete localStorage.currentChangeNumber;
   jQuery.validator.addMethod("isOldPass", function(value, element) {
     return (element.value == localStorage.password);
@@ -62,19 +63,21 @@ $(document).ready(function() {
       pwd: {
         required: true,
         minlength: 6
+      },
+      saunaid: {
+        required: localStorage.mode == "socket",
+        minlength: 6
       }
     },
     submitHandler: function(form) {
 
       localStorage.url = $("#url").val().split("(")[0].trim();
-      if (localStorage.url.indexOf(".") > -1) {
-        localStorage.mode = "url";
-      } else {
-        localStorage.mode = "socket";
-      }
+      $("#url").val(localStorage.url);
+    //  $("#saunaid").val(localStorage.saunaid);
       localStorage.password = $("#pwd").val();
-    //  $("#url").val(localStorage.url);
-      $("#pwd").val(localStorage.password);
+      localStorage.saunaid = $("#saunaid").val();
+      localStorage.url = $("#url").val();
+
       setupDone = true;
       window.location.reload();
     }
@@ -102,7 +105,7 @@ $(document).ready(function() {
       localStorage.currentChangeNumber++;
       command = "changePassword";
 
-      var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",11," + $("#newPwd").val().trim().padStart(10, "0") + ",&&&";
+      var toSend = "$$$1," + localStorage.currentChangeNumber + "," + + ((localStorage.mode == "socket") ? localStorage.saunaid + "," : "") + localStorage.password.trim().padStart(10,"0") + ",11," + $("#newPwd").val().trim().padStart(10, "0") + ",&&&";
       if (localStorage.mode == "url") {
 
         $.ajax({
@@ -139,11 +142,11 @@ $(document).ready(function() {
   }
     if (localStorage.mode === undefined) {
       if (localStorage.url.indexOf(".") > -1) {
-        localStorage.mode = "url";
+    //    localStorage.mode = "url";
       } else {
-        localStorage.mode = "socket";
+    //    localStorage.mode = "socket";
         if (ws == null) {
-          ws = new ReconnectingWebSocket(localStorage.url);
+          ws = new ReconnectingWebSocket(localStorage.saunaid);
           $("[main]").show();
           initialLoad = true;
         }
@@ -165,7 +168,7 @@ $(document).ready(function() {
     });
 
     var pp = parseInt(($("body").width() / 5) / 1);
-    var rt = parseFloat($("body").width() / 480);
+    var rt = parseFloat($("body").width() / 440);
     var nb = 0;
     $.each($("[bottombuttons]").find("div"), function() {
       if ($(this).is(":visible")) {
@@ -174,7 +177,7 @@ $(document).ready(function() {
     })
 
     $(".row.buttons div").not("#stateTable").css({
-      height: pp,
+      height: pp * rt,
       width: pp - 8,
       minWidth: pp - 8,
       maxWidth: pp - 8
@@ -220,7 +223,8 @@ for (i = 0; i < acc.length; i++) {
         })
       }
     }
-
+    if (e.target.id == "step1_tab") {
+    }
     if (e.target.id == "step3_tab") {
       if (localStorage.mode == "url") {
         $("#switchNetwork").text("Cloud");
@@ -234,7 +238,7 @@ for (i = 0; i < acc.length; i++) {
     if (e.target.id == "step4_tab") {
       localStorage.currentChangeNumber++;
       command = "checkDomain";
-      var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
+      var toSend = "$$$1," + localStorage.currentChangeNumber + "," + + ((localStorage.mode == "socket") ? localStorage.saunaid + "," : "") + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
       $.ajax({
         url:  "http://" + localStorage.url + "/?settings=" + toSend,
         type: "GET",
@@ -264,12 +268,12 @@ function switchNetwork(btn) {
   if (md == "socket") {
     localStorage.currentChangeNumber++;
     command = "changeNetwork";
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",15,&&&";
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.saunaid + "," + localStorage.password.trim().padStart(10,"0") + ",15,&&&";
     var obj = {
       action: "command",
       parameters: toSend
     }
-  //  ws.send(JSON.stringify(obj));
+    ws.send(JSON.stringify(obj));
     swal({
       type: "info",
       html: "Action can take 30 - 60 secs. Please be patient. <br />Time used: <strong id='scsp'></strong> secs.",
@@ -294,8 +298,7 @@ function switchNetwork(btn) {
   } else {
     localStorage.currentChangeNumber++;
     command = "checkDomain";
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
-    console.log(toSend);
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.saunaid + "," + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
     $("#step4_tab").tab("show");
   }
 }
@@ -327,6 +330,9 @@ function checkStorage() {
     $("[setup]").hide();
     $("#url").val(localStorage.url + " (" + localStorage.name + ")");
     $("#pwd").val(localStorage.password);
+    $("#saunaid").val(localStorage.saunaid);
+    $("#url").val(localStorage.url);
+
     initializeDrums();
     continueStart();
   }
@@ -359,6 +365,7 @@ function continueStart() {
               localStorage.currentChangeNumber++;
               command = "checkMode";
               clearInterval(rint);
+
               $.ajax({
                 url:  "http://" + localStorage.url + "/?settings=" + "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password + ",14,&&&",
                 type: "GET",
@@ -382,7 +389,9 @@ function continueStart() {
         });
   } else {
     $("#btn").attr("mode", "socket");
-    ws = new ReconnectingWebSocket(localStorage.url);
+
+    ws = new ReconnectingWebSocket(localStorage.saunaid);
+
     setTimeout(function() {
       if (ws.readyState == 0) {
         swal({
@@ -871,7 +880,7 @@ function checkSettings(rcv) {
     }, 2000);
   }
   var rstr = rcv.join(",");
-  if (rstr.indexOf("WRG_PSW") > -1) {
+  if (rstr.indexOf("WRG_PSW") > -1 && localStorage.mode == "url") {
     $("[main]").hide();
     $("[setup]").show();
     clearInterval(rint);
@@ -889,8 +898,6 @@ function checkSettings(rcv) {
     })
   }
   if (command == "checkDomain") {
-    console.log(rcv);
-
     if (rcv[4] == "1") {
       $("#dName").val(rcv[5] + "." + rcv[6] + "." + rcv[7] + ":" + rcv[8]);
     } else {
@@ -924,15 +931,25 @@ function checkSettings(rcv) {
   }
   if (command == "setDomain") {
     if (rstr.indexOf("LOCAL_NTW_OK") > -1 || rstr.indexOf("CLOUD_OK") > -1) {
-      swal({
-        type: "success",
-        text: "Set domain success."
-      })
+      setTimeout(function() {
+          swal({
+            type: "success",
+            text: "Set domain success."
+          }).tehen((result) => {
+            $("#step1_tab").tab("show");
+          })
+        }, 5000);
     } else {
       swal({
         type: "warning",
         text: "Something went wrong. Please try again."
       })
+    }
+    if (rstr.indexOf("LOCAL_NTW_OK") > -1) {
+      localStorage.mode = "url";
+    }
+    if (rstr.indexOf("CLOUD_OK") > -1) {
+      localStorage.mode = "socket";
     }
   }
   if (command == "checkMode") {
@@ -1001,7 +1018,7 @@ function checkSettings(rcv) {
 
   $.each($("[bottombuttons]").find("div"), function() {
     $(this).css({
-      height: pp,
+      height: pp * rt,
       width: pp1 - 8,
       minWidth: pp1 - 8,
       maxWidth: pp1 - 8
@@ -1258,7 +1275,7 @@ function trySet() {
     }
     console.log(saunaSettings["bSaltWall"])
   var tss = [saunaSettings.bySaunaState,saunaSettings.bySaunaTemp,saunaSettings.byInfraFill1,saunaSettings.byInfraFill2,saunaSettings.bySteam,saunaSettings.bySaunaTimeHour,saunaSettings.bySaunaTimeMin,saunaSettings.bySaunaTimeSec,saunaSettings.bRoomHeat,saunaSettings.byRoomTemp,saunaSettings.byRoomTemperringTemp,saunaSettings.bVentSate,saunaSettings.bS_Light,saunaSettings.bMoodLight,saunaSettings.bSaltWall,saunaSettings.bStarrySky];
-  var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + "," + ((localStorage.mode == "socket") ? localStorage.url + "," : "");
+  var toSend = "$$$1," + localStorage.currentChangeNumber + "," + ((localStorage.mode == "socket") ? localStorage.saunaid + "," : "") + localStorage.password.trim().padStart(10,"0") + ",";
   toSend += tss.join(",") + ",&&&";
 
   var mode = saunaSettings.bySaunaState;
@@ -1274,7 +1291,9 @@ function trySet() {
         break;
     }
   var frm = $("#setData");
+  console.log(toSend)
   if (localStorage.mode == "url") {
+
     $.ajax({
       url:  "http://" + localStorage.url + "/?settings=" + toSend,
       type: "GET",
@@ -1305,7 +1324,7 @@ function trySet() {
       },
       success: function(result){
         var c = true;
-        if (result.indexOf("WRONG PASSWORD") > -1) {
+        if (result.indexOf("WRONG PASSWORD") > -1 && localStorage.mode == "url") {
           c = false;
           $.LoadingOverlay("hide");
           swal({
@@ -1356,6 +1375,7 @@ function trySet() {
         action: "command",
         parameters: toSend
       }
+      console.log(toSend)
       ws.send(JSON.stringify(obj));
     }
 
@@ -1514,6 +1534,8 @@ function startScan(ips, ip) {
       if (result.indexOf("$$$1") == 0) {
         var r = result.split(",");
         localStorage.name = r[3];
+        localStorage.saunaid = r[2];
+        localStorage.password = r[2];
         var ss = ips + ip + " (" + r[2] + ")";
         if (window.saunas.indexOf(ss) == -1) {
           window.saunas.push( ips + ip + " (" + r[2] + ")");
@@ -1571,7 +1593,6 @@ function listSaunas() {
 }
 function checkReading() {
   if ($("[setup]").is(":visible")) {
-
     clearInterval(rint);
   } else {
       rint = setInterval(function() {
@@ -1587,11 +1608,13 @@ function changeDomain() {
   command = "setDomain";
   localStorage.currentChangeNumber++;
   if (md == "url") {
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",0,13," + us[0] + "," + us[1] + ",&&&";
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,0," + us[0] + "," + us[1] + ",&&&";
   } else {
     var uss = us.split(".");
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",1,13," + uss[0] + "," + uss[1] + "," + uss[2] + "," + us[1] + ",&&&";
+
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.saunaid + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
   }
+
   $("#url").val(u);
   if (localStorage.mode == "url") {
 
