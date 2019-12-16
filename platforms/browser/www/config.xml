@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>SENSUM SZAUNA</name>
+    <description>
+        Keep your szauna under control from anywhere.
+    </description>
+    <author email="dev@cordova.apache.org" href="http://cordova.io">
+        Sensum Szauna team
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <icon src="icon.png" />
+    <splash platform="android" qualifier="port-ldpi" src="res/screen/android/SaunaIcon2.jpg" />
+    <splash platform="android" qualifier="port-mdpi" src="res/screen/android/Saunaicon2.jpg" />
+    <splash platform="android" qualifier="port-hdpi" src="res/screen/android/Saunaicon2.jpg" />
+    <splash platform="android" qualifier="port-xhdpi" src="res/screen/android/Saunaicon2.jpg" />
+    <splash platform="android" qualifier="land-ldpi" src="res/screen/android/Saunaicon2.jpg" />
+    <splash platform="android" qualifier="land-mdpi" src="res/screen/android/Saunaicon2.jpg" />
+    <splash platform="android" qualifier="land-hdpi" src="res/screen/android/Saunaicon2.jpg" />
+    <splash platform="android" qualifier="land-xhdpi" src="res/screen/android/Saunaicon2.jpg" />
+    <preference name="android-minSdkVersion" value="19" />
+    <preference name="EnableViewportScale" value="true" />
+</widget>

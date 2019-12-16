@@ -177,7 +177,7 @@ $(document).ready(function() {
     })
 
     $(".row.buttons div").not("#stateTable").css({
-      height: pp * rt,
+      height: 110,
       width: pp - 8,
       minWidth: pp - 8,
       maxWidth: pp - 8
@@ -1018,7 +1018,7 @@ function checkSettings(rcv) {
 
   $.each($("[bottombuttons]").find("div"), function() {
     $(this).css({
-      height: pp * rt,
+      height: 110,
       width: pp1 - 8,
       minWidth: pp1 - 8,
       maxWidth: pp1 - 8
