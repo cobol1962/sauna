@@ -99,7 +99,7 @@ footer {
 .row.buttons div.bulb {
   background-image: url("../images/Bulb.png");
   background-size: contain;
-  padding: 20px;
+  padding: 10px;
   background-origin: content-box;
   background-position: center center;
   background-color: #676766;
