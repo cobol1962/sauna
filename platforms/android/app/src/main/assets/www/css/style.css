@@ -98,7 +98,9 @@ footer {
 }
 .row.buttons div.bulb {
   background-image: url("../images/Bulb.png");
-  background-size: 50% 60%;
+  background-size: contain;
+  padding: 20px;
+  background-origin: content-box;
   background-position: center center;
   background-color: #676766;
   background-repeat: no-repeat;
@@ -110,8 +112,9 @@ footer {
 
 .row.buttons div.mood {
   background-image: url("../images/Mood.png");
-  background-size: 87% 67%;
-  background-position: center center;
+  background-size: contain;
+  padding: 10px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -123,8 +126,9 @@ footer {
 }
 .row.buttons div.starry {
   background-image: url("../images/Starry.png");
-  background-size: 87% 67%;
-  background-position: center center;
+  background-size: contain;
+  padding: 10px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -134,8 +138,9 @@ footer {
 
 .row.buttons div.wall {
   background-image: url("../images/Wall.png");
-  background-size: 70% 60%;
-  background-position: center center;
+  background-size: contain;
+  padding: 15px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -145,21 +150,25 @@ footer {
 .row.buttons div.bluetooth {
   display:none;
   background-image: url("../images/Bluetooth_off.png");
-  background-size: 55% 60%;
-  background-position: center center;
+  background-size: contain;
+  padding: 10px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 }
 .row.buttons div.bluetooth.active {
-  background-size: 60% 60%;
+  background-size: contain;
+  padding: 10px;
+  background-origin: content-box;
   background-image: url("../images/Bluetooth_on.png");
   background-color: #ef7f1a;
 }
 
 .row.buttons div.vent {
   background-image: url("../images/Vent.png");
-  background-size: 85% 75%;
-  background-position: center center;
+  background-size: contain;
+  padding: 10px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 
@@ -230,8 +239,9 @@ footer {
 
 .row.buttons div.stop {
   background-image: url("../images/Stop.png");
-  background-size: 50px 55px;
-  background-position: center center;
+  background-size: contain;
+  padding: 15px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -241,8 +251,9 @@ footer {
 
 .row.buttons div.room {
   background-image: url("../images/Room.png");
-  background-size: 50px 60px;
-  background-position: center center;
+  background-size: contain;
+  padding: 15px;
+  background-origin: content-box;
   background-repeat: no-repeat;
   background-color: #676766;
 }
