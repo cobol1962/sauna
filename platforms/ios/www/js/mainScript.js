@@ -168,7 +168,7 @@ $(document).ready(function() {
     });
 
     var pp = parseInt(($("body").width() / 5) / 1);
-    var rt = parseFloat($("body").width() / 440);
+    var rt = parseFloat($("body").width() / 480);
     var nb = 0;
     $.each($("[bottombuttons]").find("div"), function() {
       if ($(this).is(":visible")) {
@@ -177,7 +177,7 @@ $(document).ready(function() {
     })
 
     $(".row.buttons div").not("#stateTable").css({
-      height: 110,
+      height: pp * rt,
       width: pp - 8,
       minWidth: pp - 8,
       maxWidth: pp - 8
@@ -1018,7 +1018,7 @@ function checkSettings(rcv) {
 
   $.each($("[bottombuttons]").find("div"), function() {
     $(this).css({
-      height: 110,
+      height: pp * rt,
       width: pp1 - 8,
       minWidth: pp1 - 8,
       maxWidth: pp1 - 8
