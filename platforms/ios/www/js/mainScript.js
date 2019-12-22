@@ -1419,6 +1419,9 @@ function refresh() {
   });
 }
 function startDrum(elm,drumid) {
+  if (drumStarted) {
+    return;
+  }
   clearInterval(waitDrum);
   drumStarted = true;
   currentDrum = drumid;
