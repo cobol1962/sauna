@@ -187,7 +187,9 @@ $(document).ready(function() {
       height: 60 * rt
     });
     $("#roomheat_div").css({
-      right: pp + 14
+      right: pp + 14,
+      fontSize: 25,
+      top:20
     })
     jQuery.validator.setDefaults({
       debug: true,
