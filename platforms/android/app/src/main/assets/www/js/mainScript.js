@@ -456,7 +456,7 @@ function initializeDrums() {
         drumStarted = false;
         $("#roomtemp_value").html(saunaSettings.byRoomTemp.padStart(2, "0") + "&#176;C");
         trySet();
-      }, 2000);
+      }, 200);
     }
   });
   $("#drum_roomtemp").hide();
@@ -470,7 +470,7 @@ function initializeDrums() {
         saunaSettings.byRoomTemperringTemp = e.value;
         $("#temperingtemp_value").html(saunaSettings.byRoomTemperringTemp.padStart(2, "0") + "&#176;C");
         trySet();
-      }, 2000);
+      }, 200);
     }
   });
   $("#drum_temperingtemp").hide();
@@ -487,7 +487,7 @@ function initializeDrums() {
         $("#infrafill1_value").html((parseInt(saunaSettings.byInfraFill1) * 10).toString().padStart(2, "0") + "%");
         drumStarted = false;
         trySet();
-      }, 2000);
+      }, 200);
     }
   });
   $("#drum_infrafill1").hide();
@@ -504,7 +504,7 @@ function initializeDrums() {
         drumStarted = false;
       //  clearInterval(rint);
         trySet();
-      }, 2000);
+      }, 200);
     }
   });
   $("#drum_infrafill2").hide();
@@ -530,7 +530,7 @@ function initializeDrums() {
           drumStarted = false;
         //  clearInterval(rint);
           trySet();
-        }, 2000);
+        }, 200);
       }
     });
     $("#drum_timerMinutes").hide();
@@ -554,7 +554,7 @@ function initializeDrums() {
           drumStarted = false;
         //  clearInterval(rint);
           trySet();
-        }, 2000);
+        }, 200);
       }
     });
     $("#drum_timerHours").hide();
@@ -570,7 +570,7 @@ function initializeDrums() {
           $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
           drumStarted = false;
           trySet();
-        }, 2000);
+        }, 200);
       }
     });
   $("#drum_temperature").hide();
@@ -799,7 +799,7 @@ function start() {
       });
 
 
-  }, 2000);
+  }, 200);
 }
 function connError(count, interval) {
   if (count > 4) {
@@ -1419,6 +1419,7 @@ function refresh() {
   });
 }
 function startDrum(elm,drumid) {
+  clearInterval(waitDrum);
   drumStarted = true;
   currentDrum = drumid;
   $(".drum-wrapper").css({
