@@ -115,6 +115,7 @@ footer {
   background-size: contain;
   padding: 5px;
   background-origin: content-box;
+    background-position: center center;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -129,6 +130,7 @@ footer {
   background-size: contain;
   padding: 5px;
   background-origin: content-box;
+    background-position: center center;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -141,6 +143,7 @@ footer {
   background-size: contain;
   padding: 5px;
   background-origin: content-box;
+    background-position: center center;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -154,6 +157,7 @@ footer {
   padding: 5px;
   background-origin: content-box;
   background-repeat: no-repeat;
+    background-position: center center;
   background-color: #676766;
 }
 .row.buttons div.bluetooth.active {
@@ -169,6 +173,7 @@ footer {
   background-size: contain;
   padding: 5px;
   background-origin: content-box;
+    background-position: center center;
   background-repeat: no-repeat;
   background-color: #676766;
 
@@ -242,6 +247,7 @@ footer {
   background-size: contain;
   padding: 5px;
   background-origin: content-box;
+    background-position: center center;
   background-repeat: no-repeat;
   background-color: #676766;
 }
@@ -254,6 +260,7 @@ footer {
   background-size: contain;
   padding: 5px;
   background-origin: content-box;
+    background-position: center center;
   background-repeat: no-repeat;
   background-color: #676766;
 }
