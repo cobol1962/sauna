@@ -868,7 +868,8 @@ function resultToObject(received) {
     saunaSettings[k] = rcv[ind].toString();
     ind++;
   }
-  if((rcv[1] ==  localStorage.currentChangeNumber && !drumStarted)) {
+  if((parseInt(rcv[1]) >=  parseInt(localStorage.currentChangeNumber) && !drumStarted)) {
+    localStorage.currentChangeNumber = rcv[1];
 //    refresh();
     drawSauna();
   }
