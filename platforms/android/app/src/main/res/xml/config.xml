@@ -46,4 +46,7 @@
     <preference name="loglevel" value="DEBUG" />
     <preference name="android-minSdkVersion" value="19" />
     <preference name="EnableViewportScale" value="true" />
+    <feature name="InAppBrowser">
+        <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
+    </feature>
 </widget>

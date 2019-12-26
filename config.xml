@@ -52,4 +52,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-socket-tcp" spec="~1.6.0" />
     <plugin name="cordova-plugin-wifiinfo" />
+    <plugin name="cordova-plugin-inappbrowser" spec="~1.7.2" />
 </widget>

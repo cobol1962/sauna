@@ -31,6 +31,15 @@ module.exports = [
     "clobbers": [
       "window.networkinterface"
     ]
+  },
+  {
+    "id": "cordova-plugin-inappbrowser.inappbrowser",
+    "file": "plugins/cordova-plugin-inappbrowser/www/inappbrowser.js",
+    "pluginId": "cordova-plugin-inappbrowser",
+    "clobbers": [
+      "cordova.InAppBrowser.open",
+      "window.open"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -41,7 +50,8 @@ module.exports.metadata =
   "cordova-plugin-add-swift-support": "1.7.1",
   "cordova-plugin-wifiinfo": "0.0.2",
   "com.pylonproducts.wifiwizard": "0.2.11",
-  "cordova-plugin-networkinterface": "2.0.0"
+  "cordova-plugin-networkinterface": "2.0.0",
+  "cordova-plugin-inappbrowser": "1.7.2"
 };
 // BOTTOM OF METADATA
 });

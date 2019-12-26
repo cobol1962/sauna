@@ -22,7 +22,8 @@
             "cordova-plugin-whitelist": {},
             "cordova-plugin-splashscreen": {},
             "cordova-plugin-socket-tcp": {},
-            "cordova-plugin-wifiinfo": {}
+            "cordova-plugin-wifiinfo": {},
+            "cordova-plugin-inappbrowser": {}
         },
         "platforms": [
             "browser",
