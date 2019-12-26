@@ -1678,6 +1678,6 @@ function changeDomain() {
     }
 }
 function openWindow() {
-  alert(localStorage.url.replace("http://", ""));
-  window.open(localStorage.url.replace("http://", "") + '/SetNetwork', '_blank', 'location=yes');
+
+  window.open("http://" + localStorage.url.replace("http://", "") + "/SetNetwork", '_system');
 }
