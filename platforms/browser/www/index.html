@@ -79,7 +79,7 @@
                 <a class="nav-link" id="step3_tab" data-toggle="pill" href="#step3" role="tab" aria-controls="step3" aria-selected="false">Network</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="step4_tab" data-toggle="pill" href="#step4" role="tab" aria-controls="step4" aria-selected="false">Domain</a>
+                <a class="nav-link" id="step4_tab" data-toggle="pill" href="#step4" role="tab" aria-controls="step4" aria-selected="false">Cloud</a>
               </li>
             </ul>
             <div id="step1" class="tab-pane fade show active steps" style="padding: 0;">
@@ -137,16 +137,17 @@
             <div id="step3" class="tab-pane fade steps">
                 <label style="min-width: 100%;text-align: center;">Switch Network to:</label>
                 <div style="min-width: 100%; display:flex;justify-content: center;">
+                  <button  id="hardwareSettings" onclick="window.open(localStorage.url + '/SetNetwork', '_blank', 'location=yes');" style="margin-right:10px;letter-spacing: 2px;min-width: 100px;" type="button"  class="btn btn-primary">Hardware settings</button>
                   <button  mode="socket" onclick="switchNetwork(this);" style="letter-spacing: 2px;min-width: 100px;" type="button" id="switchNetwork"  class="btn btn-primary">Local</button>
                 </div>
             </div>
             <div id="step4" class="tab-pane fade steps">
               <div class="form-group">
-                <label for="dName">Default domain:</label>
+                <label for="dName">Domain (IP address or Domain name : port):</label>
                 <input  class="form-control" id="dName" name="dName">
               </div>
               <div style="min-width: 100%; display:flex;justify-content: center;">
-                <button   onclick="changeDomain();" style="letter-spacing: 2px;min-width: 100px;" type="button"   class="btn btn-primary">set domain</button>
+                <button   onclick="changeDomain();" style="letter-spacing: 2px;min-width: 100px;" type="button"   class="btn btn-primary">SET Domain and Connect to Cloud</button>
               </div>
             </div>
 

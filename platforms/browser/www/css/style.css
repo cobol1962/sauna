@@ -99,7 +99,7 @@ footer {
 .row.buttons div.bulb {
   background-image: url("../images/Bulb.png");
   background-size: contain;
-  padding: 5px;
+  padding: 10px;
   background-origin: content-box;
   background-position: center center;
   background-color: #676766;
@@ -128,7 +128,7 @@ footer {
 .row.buttons div.starry {
   background-image: url("../images/Starry.png");
   background-size: contain;
-  padding: 5px;
+  padding: 10px;
   background-origin: content-box;
     background-position: center center;
   background-repeat: no-repeat;
@@ -258,7 +258,7 @@ footer {
 .row.buttons div.room {
   background-image: url("../images/Room.png");
   background-size: contain;
-  padding: 5px;
+  padding: 10px;
   background-origin: content-box;
     background-position: center center;
   background-repeat: no-repeat;
