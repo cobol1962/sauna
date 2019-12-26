@@ -137,7 +137,7 @@
             <div id="step3" class="tab-pane fade steps">
                 <label style="min-width: 100%;text-align: center;">Switch Network to:</label>
                 <div style="min-width: 100%; display:flex;justify-content: center;">
-                  <button  id="hardwareSettings" onclick="window.open(unescape(localStorage.url) + '/SetNetwork', '_blank', 'location=yes');" style="margin-right:10px;letter-spacing: 2px;min-width: 100px;" type="button"  class="btn btn-primary">Hardware settings</button>
+                  <button  id="hardwareSettings" onclick="openWindow()" style="margin-right:10px;letter-spacing: 2px;min-width: 100px;" type="button"  class="btn btn-primary">Hardware settings</button>
                   <button  mode="socket" onclick="switchNetwork(this);" style="letter-spacing: 2px;min-width: 100px;" type="button" id="switchNetwork"  class="btn btn-primary">Local</button>
                 </div>
             </div>

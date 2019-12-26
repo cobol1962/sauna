@@ -1677,3 +1677,7 @@ function changeDomain() {
       ws.send(JSON.stringify(obj));
     }
 }
+function openWindow() {
+  alert(localStorage.url.replace("http://", ""));
+  window.open(localStorage.url.replace("http://", "") + '/SetNetwork', '_blank', 'location=yes');
+}
