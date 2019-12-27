@@ -403,14 +403,14 @@ function continueStart() {
         });
   } else {
     $("#btn").attr("mode", "socket");
-    swal({
+  /*  swal({
       type: "info",
       text: "Connecting to sauna",
       allowOutsideClick: false,
       allowEscapeKey: false,
       allowEnterKey: false,
       showConfirmButton: false
-    })
+    })*/
     ws = new ReconnectingWebSocket(localStorage.saunaid);
 
     setTimeout(function() {
@@ -445,7 +445,7 @@ function initializeDrums() {
   for (i=1;i<101;i++) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
   }
-  for (i=0;i<91;i+=5) {
+  for (i=0;i<101;i+=5) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "%" + "</option>").appendTo($("#steam"));
   }
   for (i=0;i<13;i++) {
@@ -475,7 +475,7 @@ function initializeDrums() {
         $("#roomtemp_value").html(saunaSettings.byRoomTemp.padStart(2, "0") + "&#176;C");
         drumStarted = false;
         trySet();
-      }, 2000);
+      }, 3000);
     }
   });
   $("#drum_roomtemp").hide();
@@ -489,7 +489,7 @@ function initializeDrums() {
         $("#temperingtemp_value").html(saunaSettings.byRoomTemperringTemp.padStart(2, "0") + "&#176;C");
         drumStarted = false;
         trySet();
-      }, 2000);
+      }, 3000);
     }
   });
 
@@ -507,7 +507,7 @@ function initializeDrums() {
         $("#infrafill2_value").show();
         $("#infrafill1_value").html((parseInt(saunaSettings.byInfraFill1) * 10).toString().padStart(2, "0") + "%");
         trySet();
-      }, 2000);
+      }, 3000);
     }
   });
   $("#drum_infrafill1").hide();
@@ -523,7 +523,7 @@ function initializeDrums() {
         $("#infrafill2_value").html((parseInt(saunaSettings.byInfraFill2) * 10).toString().padStart(2, "0") + "%");
         drumStarted = false;
         trySet();
-      }, 2000);
+      }, 3000);
     }
   });
   $("#drum_infrafill2").hide();
@@ -548,7 +548,7 @@ function initializeDrums() {
           $("#timerMinutes_value").html(saunaSettings.bySaunaTimeMin.toString().padStart(2, "0"));
         //  clearInterval(rint);
           trySet();
-        }, 2000);
+        }, 3000);
       }
     });
     $("#drum_timerMinutes").hide();
@@ -571,7 +571,7 @@ function initializeDrums() {
           $("#timerHours_value").html(saunaSettings.bySaunaTimeHour.toString().padStart(2, "0"));
         //  clearInterval(rint);
           trySet();
-        }, 2000);
+        }, 3000);
       }
     });
     $("#drum_timerHours").hide();
@@ -587,7 +587,7 @@ function initializeDrums() {
           $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
           drumStarted = false;
           trySet();
-        }, 2000);
+        }, 3000);
       }
     });
   $("#drum_temperature").hide();
@@ -602,7 +602,7 @@ function initializeDrums() {
           drumStarted = false;
           trySet();
         }
-      }, 2000);
+      }, 3000);
     }
   });
   $("#drum_steam").hide();
