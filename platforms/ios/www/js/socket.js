@@ -4,6 +4,7 @@ function ReconnectingWebSocket(saunaid) {
     var uu = localStorage.url.split(":")[1];
 
     var url = localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
+
     this.debug = false;
     this.reconnectInterval = 1000;
     this.timeoutInterval = 5000;
@@ -39,7 +40,15 @@ function ReconnectingWebSocket(saunaid) {
     this.onmessage = function (e) {
 
       var obj = $.parseJSON(e.data);
+
       if (obj.action == "parameters") {
+        if (!sset) {
+          sset = true;
+          $("[main]").show();
+          initialLoad = true;
+          localStorage.connected = true;
+          swal.close();
+        }
         try {
           var pr = obj.parameters.split(",");
           if (localStorage.currentChangeNumber === undefined || firstTouch) {

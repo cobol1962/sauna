@@ -22,6 +22,7 @@ var saunaSettings = {
   bSaltWall: 0,
   bStarrySky: 0
 };
+var sset = false;
 var roomRemoved = false;
 var waterShown = false;
 var currentDrum = "";
@@ -73,7 +74,7 @@ $(document).ready(function() {
 
       localStorage.url = $("#url").val().split("(")[0].trim();
       $("#url").val(localStorage.url);
-    //  $("#saunaid").val(localStorage.saunaid);
+  //    $("#saunaid").val(localStorage.saunaid);
       localStorage.password = $("#pwd").val();
       localStorage.saunaid = $("#saunaid").val();
       localStorage.url = $("#url").val();
@@ -168,7 +169,7 @@ $(document).ready(function() {
     });
 
     var pp = parseInt(($("body").width() / 5) / 1);
-    var rt = parseFloat($("body").width() / 480);
+    var rt = parseFloat($("body").width() / 430);
     var nb = 0;
     $.each($("[bottombuttons]").find("div"), function() {
       if ($(this).is(":visible")) {
@@ -402,7 +403,14 @@ function continueStart() {
         });
   } else {
     $("#btn").attr("mode", "socket");
-
+    swal({
+      type: "info",
+      text: "Connecting to sauna",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      showConfirmButton: false
+    })
     ws = new ReconnectingWebSocket(localStorage.saunaid);
 
     setTimeout(function() {
@@ -422,9 +430,8 @@ function continueStart() {
             clearInterval(rint);
         });
       } else {
-        $("[main]").show();
-        initialLoad = true;
-        localStorage.connected = true;
+        sset = false;
+      
       }
     }, 5000);
   }
@@ -448,8 +455,8 @@ function initializeDrums() {
       $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "</option>").appendTo($("#timerMinutes"));
   }
   for (i=0;i<11;i+=1) {
-    $("<option value='" + i + "'>" + (i * 10).toString().padStart(2, "0") + "" + "</option>").appendTo($("#infrafill1"));
-    $("<option value='" + i + "'>" + (i * 10).toString().padStart(2, "0") + "" +  "</option>").appendTo($("#infrafill2"));
+    $("<option value='" + i + "'>" + (i * 10).toString().padStart(2, "0") + "%" + "</option>").appendTo($("#infrafill1"));
+    $("<option value='" + i + "'>" + (i * 10).toString().padStart(2, "0") + "%" +  "</option>").appendTo($("#infrafill2"));
   }
 
   for (i=5;i<16;i+=1) {
@@ -463,13 +470,12 @@ function initializeDrums() {
     onChange : function (e) {
       clearTimeout(roomtempInt);
       clearTimeout(waitDrum);
-console.log(e.value)
       roomtempInt = setTimeout(function() {
         saunaSettings.byRoomTemp = e.value;
-        drumStarted = false;
         $("#roomtemp_value").html(saunaSettings.byRoomTemp.padStart(2, "0") + "&#176;C");
+        drumStarted = false;
         trySet();
-      }, 200);
+      }, 2000);
     }
   });
   $("#drum_roomtemp").hide();
@@ -480,10 +486,10 @@ console.log(e.value)
       clearTimeout(waitDrum);
       roomtempInt = setTimeout(function() {
         saunaSettings.byRoomTemperringTemp = e.value;
-        drumStarted = false;
         $("#temperingtemp_value").html(saunaSettings.byRoomTemperringTemp.padStart(2, "0") + "&#176;C");
+        drumStarted = false;
         trySet();
-      }, 200);
+      }, 2000);
     }
   });
 
@@ -497,11 +503,11 @@ console.log(e.value)
       $('#infrafill2_value').show();
       infrafill1Int = setTimeout(function() {
         saunaSettings.byInfraFill1 = e.value;
+        drumStarted = false;
         $("#infrafill2_value").show();
         $("#infrafill1_value").html((parseInt(saunaSettings.byInfraFill1) * 10).toString().padStart(2, "0") + "%");
-        drumStarted = false;
         trySet();
-      }, 200);
+      }, 2000);
     }
   });
   $("#drum_infrafill1").hide();
@@ -516,9 +522,8 @@ console.log(e.value)
         $("#infrafill1_value").show();
         $("#infrafill2_value").html((parseInt(saunaSettings.byInfraFill2) * 10).toString().padStart(2, "0") + "%");
         drumStarted = false;
-      //  clearInterval(rint);
         trySet();
-      }, 200);
+      }, 2000);
     }
   });
   $("#drum_infrafill2").hide();
@@ -541,10 +546,9 @@ console.log(e.value)
           }
       //    $("#timerMinutes_value").html("59");
           $("#timerMinutes_value").html(saunaSettings.bySaunaTimeMin.toString().padStart(2, "0"));
-          drumStarted = false;
         //  clearInterval(rint);
           trySet();
-        }, 200);
+        }, 2000);
       }
     });
     $("#drum_timerMinutes").hide();
@@ -565,10 +569,9 @@ console.log(e.value)
             localStorage.steam.bySaunaTimeHour = saunaSettings.bySaunaTimeMin;
           }
           $("#timerHours_value").html(saunaSettings.bySaunaTimeHour.toString().padStart(2, "0"));
-          drumStarted = false;
         //  clearInterval(rint);
           trySet();
-        }, 200);
+        }, 2000);
       }
     });
     $("#drum_timerHours").hide();
@@ -584,7 +587,7 @@ console.log(e.value)
           $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
           drumStarted = false;
           trySet();
-        }, 200);
+        }, 2000);
       }
     });
   $("#drum_temperature").hide();
@@ -592,13 +595,14 @@ console.log(e.value)
   $("#steam").drum({
     onChange : function (e) {
       clearTimeout(steamInt);
-      clearTimeout(waitDrum);
       steamInt = setTimeout(function() {
         saunaSettings.bySteam = e.value;
-        $("#steam_value").html(saunaSettings.bySteam.padStart(2, "0"));
-        drumStarted = false;
-        trySet();
-      }, 500);
+        if (saunaSettings.bySteam != "") {
+          $("#steam_value").html(saunaSettings.bySteam.padStart(2, "0"));
+          drumStarted = false;
+          trySet();
+        }
+      }, 2000);
     }
   });
   $("#drum_steam").hide();
@@ -621,8 +625,6 @@ console.log(e.value)
       return;
     }
     saunaSettings[$(this).attr("target")] = ($(this).hasClass("active") ? 1 : 0);
-    console.log($(this).attr("target") + " " + $(this).hasClass("active"))
-    console.log("???????? " + saunaSettings.bSaltWall);
     clearTimeout(noChangeStateTimeout);
   /*  $.each($("[target]"), function() {
       if ($(this).hasClass("active")) {
@@ -949,11 +951,25 @@ function checkSettings(rcv) {
       setTimeout(function() {
           swal({
             type: "success",
-            text: "Set domain success."
+            text: "Set domain success. Waiting sauna to connect. 5 seconds",
+            showConfirmButton: false,
+            timer: 5000
           }).then((result) => {
-            $("#step1_tab").tab("show");
+            if (rstr.indexOf("LOCAL_NTW_OK") > -1) {
+              localStorage.mode = "url";
+                window.location.reload();
+            }
+            if (rstr.indexOf("CLOUD_OK") > -1) {
+              sset = false;
+              localStorage.url = $("#dName").val();
+              $("#url").val($("#dName").val());
+              localStorage.mode = "socket";
+              window.location.reload();
+            }
+
+
           })
-        }, 5000);
+        }, 10000);
     } else {
       swal({
         type: "warning",
@@ -1012,7 +1028,7 @@ function checkSettings(rcv) {
           break;
     }
 
-    if (rcv[6] == "1") {
+    if (localStorage.mode == "socket") {
       $(".wall").show();
       $(".bluetooth").hide();
     } else {
@@ -1022,7 +1038,7 @@ function checkSettings(rcv) {
 
   }
   var pp = parseInt((($("body").width() - 8) / 5) / 1);
-  var rt = parseFloat($("body").width() / 480);
+  var rt = parseFloat($("body").width() / 430);
   var nb = 0;
   $.each($("[bottombuttons]").find("div"), function() {
     if ($(this).is(":visible")) {
@@ -1196,18 +1212,39 @@ function drawSauna(received = true) {
     $("#ttemp").show();
   }
   $("#temperingtemp_value").html(saunaSettings.byRoomTemperringTemp.padStart(2, "0") + "&#176;C");
-  $("#temperingtemp").drum('setIndex', parseInt(saunaSettings.byRoomTemperringTemp) - 1);
+  var sv1 = 0;
+  $.each($("#temperingtemp").find("option"), function(ind) {
+    if ($(this).attr("value") == saunaSettings.byRoomTemperringTemp) {
+      sv1 = ind;
+    }
+  })
+  $("#roomtemp").drum('setIndex', sv);
+  $("#temperingtemp").drum('setIndex', sv1);
   $("#real_room_temp").html(saunaSettings.byMeasuredRoomTemp.padStart(2, "0"));
 
   $("#roomtemp_value").html(saunaSettings.byRoomTemp.padStart(2, "0") + "&#176;C");
-  $("#roomtemp").drum('setIndex', parseInt(saunaSettings.byRoomTemp) - 1);
+  var sv = 0;
+
+  $.each($("#roomtemp").find("option"), function(ind) {
+  //  console.log($(this).attr("value"))
+    if ($(this).attr("value") == saunaSettings.byRoomTemp) {
+      sv = ind;
+    }
+  })
+  $("#roomtemp").drum('setIndex', sv);
 
   if (saunaSettings.byMeasuredSteam == '255') {
     $("[source='byMeasuredSteam']").hide();
   } else {
     $("[source='byMeasuredSteam']").show();
     $("#real_steam_value").html(saunaSettings.byMeasuredSteam.padStart(2, "0"));
-    $("#steam").drum('setIndex', parseInt(saunaSettings.bySteam) - 1);
+    var sv = 0;
+    $.each($("#steam").find("option"), function(ind) {
+      if ($(this).attr("value") == saunaSettings.bySteam) {
+        sv = ind;
+      }
+    })
+    $("#steam").drum('setIndex', sv);
     $("#steam_value").html(saunaSettings.bySteam.padStart(2, "0"));
   }
 
@@ -1647,7 +1684,11 @@ function changeDomain() {
 
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.saunaid + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
   }
-
+  swal({
+    type: "info",
+    text: "setting domain. be patient.",
+    showConfirmButton: false
+  })
   $("#url").val(u);
   if (localStorage.mode == "url") {
 

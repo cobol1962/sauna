@@ -141,7 +141,7 @@ footer {
 .row.buttons div.wall {
   background-image: url("../images/Wall.png");
   background-size: contain;
-  padding: 5px;
+  padding: 10px;
   background-origin: content-box;
     background-position: center center;
   background-repeat: no-repeat;
@@ -154,7 +154,7 @@ footer {
   display:none;
   background-image: url("../images/Bluetooth_off.png");
   background-size: contain;
-  padding: 5px;
+  padding: 10px;
   background-origin: content-box;
   background-repeat: no-repeat;
     background-position: center center;
@@ -162,7 +162,7 @@ footer {
 }
 .row.buttons div.bluetooth.active {
   background-size: contain;
-  padding: 5px;
+  padding: 10px;
   background-origin: content-box;
   background-image: url("../images/Bluetooth_on.png");
   background-color: #ef7f1a;
