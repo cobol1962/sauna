@@ -431,7 +431,7 @@ function continueStart() {
         });
       } else {
         sset = false;
-      
+
       }
     }, 5000);
   }
@@ -1686,7 +1686,7 @@ function changeDomain() {
   }
   swal({
     type: "info",
-    text: "setting domain. be patient.",
+    text: "Setting domain. Be patient.",
     showConfirmButton: false
   })
   $("#url").val(u);

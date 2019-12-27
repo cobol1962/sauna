@@ -42,13 +42,15 @@ function ReconnectingWebSocket(saunaid) {
       var obj = $.parseJSON(e.data);
 
       if (obj.action == "parameters") {
-        if (!sset) {
+
           sset = true;
-          $("[main]").show();
+          if (!$("[setup]").is(":visible")) {
+              $("[main]").show();
+          }
           initialLoad = true;
-          localStorage.connected = true; 
+          localStorage.connected = true;
           swal.close();
-        }
+
         try {
           var pr = obj.parameters.split(",");
           if (localStorage.currentChangeNumber === undefined || firstTouch) {
