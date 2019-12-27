@@ -46,7 +46,7 @@ function ReconnectingWebSocket(saunaid) {
           sset = true;
           $("[main]").show();
           initialLoad = true;
-          localStorage.connected = true;
+          localStorage.connected = true; 
           swal.close();
         }
         try {
