@@ -451,9 +451,12 @@ var tHoursInt = null;
 var tMinutesInt = null;
 function initializeDrums() {
   Hammer.plugins.fakeMultitouch();
-  for (i=1;i<101;i++) {
+  for (i=1;i<101;i+=1) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
   }
+  $("<option value='" + 999 + "'>" + "" + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
+  $("<option value='" + 999 + "'>" + "" + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
+  $("<option value='" + 999 + "'>" + "" + "</option>").appendTo($("#temperature"));
   for (i=0;i<101;i+=5) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "%" + "</option>").appendTo($("#steam"));
   }
@@ -1208,7 +1211,14 @@ function drawSauna(received = true) {
     $("#temperr").hide();
     $("#temp_div").show();
     $("[source='byMeasuredSaunaTemp']").show();
-    $("#temperature").drum('setIndex', parseInt(saunaSettings.bySaunaTemp) - 1);
+    var sv2 = 0;
+    $.each($("#temperature").find("option"), function(ind) {
+      if ($(this).attr("value") == saunaSettings.bySaunaTemp) {
+        sv2 = ind;
+      }
+    })
+    $("#roomtemp").drum('setIndex', sv);
+    $("#temperature").drum('setIndex', sv2);
     $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
     $("#real_temperature_value").html(saunaSettings.byMeasuredSaunaTemp.padStart(2, "0"));
   }
