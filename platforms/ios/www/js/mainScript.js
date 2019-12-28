@@ -414,6 +414,7 @@ function continueStart() {
     ws = new ReconnectingWebSocket(localStorage.saunaid);
 
     setTimeout(function() {
+
       if (ws.readyState == 0) {
         swal({
           type: "error",
@@ -430,7 +431,15 @@ function continueStart() {
             clearInterval(rint);
         });
       } else {
-        sset = false;
+        swal({
+          type: "info",
+          text: "Connecting",
+          showConfirmButton: false,
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false,
+          showLoading: true
+        })
 
       }
     }, 5000);

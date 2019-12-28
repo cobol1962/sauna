@@ -25,7 +25,26 @@ function ReconnectingWebSocket(saunaid) {
             reconnect = true;
         }
         url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
+        var ot = setTimeout(function() {
+          $("[main]").hide();
+          swal({
+            type: 'error',
+            text: "Connection fail.",
+            confirmButtonText: "Check settings",
+            cancelButtonText: "Check settings",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
 
+          }).then((result) => {
+            $("[main]").hide();
+            $("header .row.title").addClass("active");
+            $("#saunaName").html("SETTINGS");
+            $("[main]").hide();
+            $("[setup]").show();
+            clearInterval(rint);
+          });
+        }, 10000);
     }
 
 
@@ -42,15 +61,10 @@ function ReconnectingWebSocket(saunaid) {
       var obj = $.parseJSON(e.data);
 
       if (obj.action == "parameters") {
-
-          sset = true;
-          if (!$("[setup]").is(":visible")) {
-              $("[main]").show();
-          }
-          initialLoad = true;
-          localStorage.connected = true;
-          swal.close();
-
+        swal.close();
+        $("[main]").show();
+        initialLoad = true;
+        localStorage.connected = true;
         try {
           var pr = obj.parameters.split(",");
           if (localStorage.currentChangeNumber === undefined || firstTouch) {
