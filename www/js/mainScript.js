@@ -594,12 +594,14 @@ function initializeDrums() {
       onChange : function (e) {
         clearTimeout(tempInt);
       //  clearInterval(rint);
-        clearTimeout(waitDrum);
+      //  clearTimeout(waitDrum);
         tempInt = setTimeout(function() {
-          saunaSettings.bySaunaTemp = e.value;
-          $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
-          drumStarted = false;
-          trySet();
+          if (e.value != "999") {
+              saunaSettings.bySaunaTemp = e.value;
+              $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
+              drumStarted = false;
+              trySet();
+          }
         }, 3000);
       }
     });
@@ -609,12 +611,14 @@ function initializeDrums() {
     onChange : function (e) {
       clearTimeout(steamInt);
       steamInt = setTimeout(function() {
-        saunaSettings.bySteam = e.value;
-        if (saunaSettings.bySteam != "") {
-          $("#steam_value").html(saunaSettings.bySteam.padStart(2, "0"));
-          drumStarted = false;
-          trySet();
-        }
+        if (e.value != "999") {
+            saunaSettings.bySteam = e.value;
+            if (saunaSettings.bySteam != "") {
+              $("#steam_value").html(saunaSettings.bySteam.padStart(2, "0"));
+              drumStarted = false;
+              trySet();
+            }
+          }
       }, 3000);
     }
   });
@@ -904,6 +908,7 @@ function resultToObject(received) {
   }
 }
 function checkSettings(rcv) {
+
   if (!$("[setup]").is(":visible")) {
      rint = setInterval(function() {
       refresh();
@@ -1670,12 +1675,14 @@ function listSaunas() {
   $("#url").typeahead({ source: window.saunas });
 }
 function checkReading() {
-  if ($("[setup]").is(":visible")) {
-    clearInterval(rint);
-  } else {
-      rint = setInterval(function() {
-        refresh();
-      }, 2000);
+  if (localStorage.connected != "false") {
+    if ($("[setup]").is(":visible")) {
+      clearInterval(rint);
+    } else {
+        rint = setInterval(function() {
+          refresh();
+        }, 2000);
+      }
     }
 }
 function changeDomain() {

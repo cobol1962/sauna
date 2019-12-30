@@ -41,7 +41,7 @@
     <body>
 
           <header>
-            <div class="row title" swtyle="cursor:pointer;" onclick="if (setupDone) { $(this).toggleClass('active');$('[main]').toggle();$('[setup]').toggle();checkReading(); }">
+            <div class="row title" swtyle="cursor:pointer;" onclick="if (localStorage.connected == 'false') { return false; };if (setupDone) { $(this).toggleClass('active');$('[main]').toggle();$('[setup]').toggle();checkReading(); }">
                 <span id="saunaName"></span>
             </div>
           <section main style="display:none;">
