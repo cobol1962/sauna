@@ -50,6 +50,18 @@ var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
   //localStorage.mode = "url";
+  if (localStorage.mode == "socket") {
+    swal({
+      type: "info",
+      text: "Connecting",
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      showLoading: true
+    })
+
+  }
   delete localStorage.currentChangeNumber;
   jQuery.validator.addMethod("isOldPass", function(value, element) {
     return (element.value == localStorage.password);
@@ -411,7 +423,26 @@ function continueStart() {
     ws = new ReconnectingWebSocket(localStorage.saunaid);
 
     setTimeout(function() {
-
+      if (ws === undefined) {
+        swal({
+          type: "error",
+          text: "PLEASE CHECK SETTINGS AGAIN",
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          allowEnterKey: false
+        }).then((result) => {
+          $("[main]").hide();
+            $("header .row.title").addClass("active");
+            $("#saunaName").html("SETTINGS");
+            $("[main]").hide();
+            $("[setup]").show();
+            localStorage.mode = "url"
+            clearInterval(rint);
+        });
+      }
+        if (ws === undefined) {
+          return;
+        }
       if (ws.readyState == 0) {
         swal({
           type: "error",
