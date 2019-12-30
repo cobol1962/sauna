@@ -467,7 +467,11 @@ function continueStart() {
           allowOutsideClick: false,
           allowEscapeKey: false,
           allowEnterKey: false,
-          showLoading: true
+          showLoading: true,
+          timer: 2000
+        }).then((result) => {
+          $("[main]").show();
+          initialLoad = true;
         })
 
       }
