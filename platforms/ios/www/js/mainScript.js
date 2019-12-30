@@ -65,10 +65,7 @@ $(document).ready(function() {
         required: true,
         minlength: 6
       },
-      saunaid: {
-        required: (localStorage.mode == "socket"),
-        minlength: 6
-      }
+
     },
     submitHandler: function(form) {
 
@@ -418,7 +415,7 @@ function continueStart() {
       if (ws.readyState == 0) {
         swal({
           type: "error",
-          text: "Please check settings again",
+          text: "PLEASE CHECK SETTINGS AGAIN",
           allowOutsideClick: false,
           allowEscapeKey: false,
           allowEnterKey: false
@@ -428,6 +425,7 @@ function continueStart() {
             $("#saunaName").html("SETTINGS");
             $("[main]").hide();
             $("[setup]").show();
+            localStorage.mode = "url"
             clearInterval(rint);
         });
       } else {
@@ -454,12 +452,15 @@ function initializeDrums() {
   for (i=1;i<101;i+=1) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
   }
-  $("<option value='" + 999 + "'>" + "" + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
-  $("<option value='" + 999 + "'>" + "" + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
+  $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#temperature"));
+  $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#temperature"));
   $("<option value='" + 999 + "'>" + "" + "</option>").appendTo($("#temperature"));
   for (i=0;i<101;i+=5) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "%" + "</option>").appendTo($("#steam"));
   }
+  $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#steam"));
+  $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#steam"));
+  $("<option value='" + 999 + "'>" + "" + "</option>").appendTo($("#steam"));
   for (i=0;i<13;i++) {
       $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "</option>").appendTo($("#timerHours"));
   }
