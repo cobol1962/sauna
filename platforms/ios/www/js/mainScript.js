@@ -367,7 +367,7 @@ function continueStart() {
     $("#btn").attr("mode", "url");
         $.ajax({
           url:  "http://" + localStorage.url + "/GetValue",
-          timeout: 3000,
+          timeout: 3000, 
 
           success: function(result){
             if (result == "") {
@@ -420,10 +420,16 @@ function continueStart() {
       allowEnterKey: false,
       showConfirmButton: false
     })*/
+    alert("connect");
+    try {
     ws = new ReconnectingWebSocket(localStorage.saunaid);
-
+  } catch(err) {
+    alert(err);
+  }
     setTimeout(function() {
+      alert("tajmaout proso");
       if (ws === undefined) {
+        alert("ws undefined");
         swal({
           type: "error",
           text: "PLEASE CHECK SETTINGS AGAIN",
@@ -444,6 +450,7 @@ function continueStart() {
           return;
         }
       if (ws.readyState == 0) {
+          alert("ws neotvoren");
         swal({
           type: "error",
           text: "PLEASE CHECK SETTINGS AGAIN",
