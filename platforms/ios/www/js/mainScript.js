@@ -367,7 +367,7 @@ function continueStart() {
     $("#btn").attr("mode", "url");
         $.ajax({
           url:  "http://" + localStorage.url + "/GetValue",
-          timeout: 3000, 
+          timeout: 3000,
 
           success: function(result){
             if (result == "") {
@@ -421,10 +421,29 @@ function continueStart() {
       showConfirmButton: false
     })*/
     alert("connect");
+    var o = true;
     try {
     ws = new ReconnectingWebSocket(localStorage.saunaid);
   } catch(err) {
-    alert(err);
+    o = false;
+    swal({
+      type: "error",
+      text: "PLEASE CHECK SETTINGS AGAIN",
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false
+    }).then((result) => {
+      $("[main]").hide();
+        $("header .row.title").addClass("active");
+        $("#saunaName").html("SETTINGS");
+        $("[main]").hide();
+        $("[setup]").show();
+        localStorage.mode = "url"
+        clearInterval(rint);
+    });
+  }
+  if (!o) {
+    return false;
   }
     setTimeout(function() {
       alert("tajmaout proso");
