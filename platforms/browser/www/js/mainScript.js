@@ -229,14 +229,14 @@ for (i = 0; i < acc.length; i++) {
 }
   $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
     if (e.target.id != "step1_tab") {
-      if (localStorage.connected == "false") {
+    /*  if (localStorage.connected == "false") {
         swal({
           type: "error",
           text: "You are not connected to any sauna. Please connect first."
         }).then((result) => {
           $("#step1_tab").tab("show");
         })
-      }
+      }*/
     }
     if (e.target.id == "step1_tab") {
     }
@@ -420,7 +420,6 @@ function continueStart() {
       allowEnterKey: false,
       showConfirmButton: false
     })*/
-    alert("connect");
     var o = true;
     try {
     ws = new ReconnectingWebSocket(localStorage.saunaid);
@@ -445,10 +444,8 @@ function continueStart() {
   if (!o) {
     return false;
   }
-    setTimeout(function() {
-      alert("tajmaout proso");
+var is =  setTimeout(function() {
       if (ws === undefined) {
-        alert("ws undefined");
         swal({
           type: "error",
           text: "PLEASE CHECK SETTINGS AGAIN",
@@ -469,7 +466,6 @@ function continueStart() {
           return;
         }
       if (ws.readyState == 0) {
-          alert("ws neotvoren");
         swal({
           type: "error",
           text: "PLEASE CHECK SETTINGS AGAIN",
@@ -497,6 +493,7 @@ function continueStart() {
           timer: 2000
         }).then((result) => {
           $("[main]").show();
+          clearTimeout(is);
           initialLoad = true;
         })
 
@@ -993,12 +990,16 @@ function checkSettings(rcv) {
       $("#step1_tab").tab("show");
     })
   }
+
   if (command == "checkDomain") {
+
     if (rcv[4] == "1") {
-      $("#dName").val(rcv[5] + "." + rcv[6] + "." + rcv[7] + ":" + rcv[8]);
+      $("#dName").val(rcv[5] + "." + rcv[6] + "." + rcv[7] + "." + rcv[8] + ":" + rcv[9]);
     } else {
       $("#dName").val(rcv[5] + ":" + rcv[6])
     }
+    localStorage.saunaid = rcv[2];
+    $("#saunaid").val(rcv[2])
   }
   if (command == "changeNetwork") {
     if (rstr.indexOf("LOCAL_NTW_OK") > -1) {
@@ -1766,12 +1767,13 @@ function changeDomain() {
   command = "setDomain";
   localStorage.currentChangeNumber++;
   if (md == "url") {
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,0," + us[0] + "," + us[1] + ",&&&";
+    var uss = us[0].split(".");
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," +  localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
   } else {
-    var uss = us.split(".");
-
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.saunaid + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
+    var uss = us[0].split(".");
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + ","  + uss[3] + "," + us[1] + ",&&&";
   }
+  console.log(toSend)
   swal({
     type: "info",
     text: "Setting domain. Be patient.",

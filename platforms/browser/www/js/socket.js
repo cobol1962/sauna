@@ -26,7 +26,7 @@ function ReconnectingWebSocket(saunaid) {
         }
         url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
         var ot = setTimeout(function() {
-          $("[main]").hide();
+        /*  $("[main]").hide();
           swal({
             type: 'error',
             text: "Connection fail.",
@@ -43,7 +43,7 @@ function ReconnectingWebSocket(saunaid) {
             $("[main]").hide();
             $("[setup]").show();
             clearInterval(rint);
-          });
+          });*/
         }, 10000);
     }
 
@@ -62,7 +62,9 @@ function ReconnectingWebSocket(saunaid) {
 
       if (obj.action == "parameters") {
         swal.close();
-        $("[main]").show();
+        if (!$("[setup]").is(":visible")) {
+          $("[main]").show();
+        }
         initialLoad = true;
         localStorage.connected = true;
         try {
