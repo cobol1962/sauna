@@ -50,6 +50,13 @@ var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
   //localStorage.mode = "url";
+  setInterval(function() {
+    if  (!$("[setup]").is(":visible")) {
+      $("#saunaName").html(localStorage.saunaName);
+    } else {
+      $("#saunaName").html("SETTINGS");
+    }
+  }, 1000);
   if (localStorage.mode == "socket") {
     swal({
       type: "info",
@@ -943,9 +950,11 @@ function resultToObject(received) {
     checkSettings(rcv);
     return;
   }
+  localStorage.saunaName = rcv[3];
 
   if (localStorage.currentChangeNumber === undefined || firstTouch) {
     $("#saunaName").html(rcv[3]);
+    localStorage.saunaName = rcv[3];
     $("#saunaName").css({
       visibility: "visible"
     })
@@ -1739,6 +1748,7 @@ function listSaunas() {
 function checkReading() {
   if (localStorage.connected != "false") {
     if ($("[setup]").is(":visible")) {
+
       clearInterval(rint);
     } else {
         rint = setInterval(function() {
