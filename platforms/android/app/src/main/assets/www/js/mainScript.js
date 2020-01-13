@@ -49,9 +49,11 @@ currentSettings = [];
 var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
+
   //localStorage.mode = "url";
   setInterval(function() {
     if  (!$("[setup]").is(":visible")) {
+      console.log(localStorage.saunaName)
       $("#saunaName").html(localStorage.saunaName);
     } else {
       $("#saunaName").html("SETTINGS");
@@ -268,6 +270,7 @@ for (i = 0; i < acc.length; i++) {
       localStorage.currentChangeNumber++;
       command = "checkDomain";
       var toSend = "$$$1," + localStorage.currentChangeNumber + "," + + ((localStorage.mode == "socket") ? localStorage.saunaid + "," : "") + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
+      console.log(toSend)
       $.ajax({
         url:  "http://" + localStorage.url + "/?settings=" + toSend,
         type: "GET",
@@ -633,7 +636,7 @@ function initializeDrums() {
 
     $("#timerHours").drum({
       onChange : function (e) {
-      //  clearInterval(rint);
+       console.log(e.value);
         clearTimeout(tHoursInt);
         tHoursInt = setTimeout(function() {
           saunaSettings.bySaunaTimeHour = e.value;
@@ -658,9 +661,9 @@ function initializeDrums() {
     $("#temperature").drum({
       onChange : function (e) {
         clearTimeout(tempInt);
-      //  clearInterval(rint);
-      //  clearTimeout(waitDrum);
+        clearTimeout(waitDrum);
         tempInt = setTimeout(function() {
+        console.log(e.value)
           if (e.value != "999") {
               saunaSettings.bySaunaTemp = e.value;
               $("#temperature_value").html(saunaSettings.bySaunaTemp.padStart(2, "0"));
@@ -999,7 +1002,7 @@ function checkSettings(rcv) {
       $("#step1_tab").tab("show");
     })
   }
-
+console.log("???? = " + rcv)
   if (command == "checkDomain") {
 
     if (rcv[4] == "1") {
@@ -1784,6 +1787,7 @@ function changeDomain() {
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + ","  + uss[3] + "," + us[1] + ",&&&";
   }
   console.log(toSend)
+  
   swal({
     type: "info",
     text: "Setting domain. Be patient.",

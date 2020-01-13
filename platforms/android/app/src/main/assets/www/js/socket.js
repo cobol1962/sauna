@@ -17,7 +17,7 @@ function ReconnectingWebSocket(saunaid) {
     this.readyState = WebSocket.CONNECTING;
     this.URL = url; // Public API
    this.refreshUserTimeout = null;
-
+this.ot = null;
     this.onopen = function () {
 
         var reconnect = false;
@@ -25,8 +25,8 @@ function ReconnectingWebSocket(saunaid) {
             reconnect = true;
         }
         url = ('https:' == document.location.protocol ? 'ws://' : 'ws://') + localStorage.url.split(":")[0] + ":" + (parseInt(localStorage.url.split(":")[1]) + 1).toString() + "/?saunaid=" + saunaid;
-        var ot = setTimeout(function() {
-        /*  $("[main]").hide();
+        this.ot = setTimeout(function() {
+          $("[main]").hide();
           swal({
             type: 'error',
             text: "Connection fail.",
@@ -43,8 +43,8 @@ function ReconnectingWebSocket(saunaid) {
             $("[main]").hide();
             $("[setup]").show();
             clearInterval(rint);
-          });*/
-        }, 10000);
+          });
+        }, 5000);
     }
 
 
@@ -61,6 +61,7 @@ function ReconnectingWebSocket(saunaid) {
       var obj = $.parseJSON(e.data);
 
       if (obj.action == "parameters") {
+        clearTimeout(this.ot); 
         swal.close();
         if (!$("[setup]").is(":visible")) {
           $("[main]").show();
