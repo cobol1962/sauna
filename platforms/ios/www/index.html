@@ -85,13 +85,13 @@
           <div setup style="padding:6px;display:none;max-width: 100%;">
             <ul class="nav nav-pills mb-4" id="steps_tab" role="tablist" >
               <li class="nav-item">
-                <a class="nav-link active" id="step1_tab" data-toggle="pill" href="#step1" role="tab" aria-controls="step1" aria-selected="true">Connect</a>
+                <a class="nav-link active" id="step1_tab" data-toggle="pill" href="#step1" role="tab" aria-controls="step1" aria-selected="true">Conn</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="step2_tab" data-toggle="pill" href="#step2" role="tab" aria-controls="step2" aria-selected="false">Password</a>
+                <a class="nav-link" id="step2_tab" data-toggle="pill" href="#step2" role="tab" aria-controls="step2" aria-selected="false">Pass</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" id="step3_tab" data-toggle="pill" href="#step3" role="tab" aria-controls="step3" aria-selected="false">Network</a>
+                <a class="nav-link" id="step3_tab" data-toggle="pill" href="#step3" role="tab" aria-controls="step3" aria-selected="false">Net</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="step4_tab" data-toggle="pill" href="#step4" role="tab" aria-controls="step4" aria-selected="false">Cloud</a>
@@ -175,12 +175,24 @@
               </div>
             </div>
             <div id="step5" class="tab-pane fade steps">
-              <form id="appsettings">
+              <form id="appsettings" style="width:70%;margin : 5px auto;">
                 <div class="form-group">
                   <div class="pretty p-switch">
-                      <input type="checkbox" />
+                      <input type="checkbox" id="sinfra" />
                       <div class="state">
-                          <label>Check</label>
+                          <label>Infra</label>
+                      </div>
+                  </div>
+                  <div class="pretty p-switch">
+                      <input type="checkbox" id="sfinn" />
+                      <div class="state">
+                          <label>Finn</label>
+                      </div>
+                  </div>
+                  <div class="pretty p-switch">
+                      <input type="checkbox" id="sbio" />
+                      <div class="state">
+                          <label>Bio</label>
                       </div>
                   </div>
                 </div>
