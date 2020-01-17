@@ -360,9 +360,10 @@ span[measured] {
    flex: 1 1 30%;
 }
 .steps {
-  padding: 10px;
+  padding: 4px;
   background: transparent;
   color: #d77217;
+
 }
 .btn.btn-primary {
   background: #676766;
@@ -379,7 +380,7 @@ span[measured] {
     background-color: #d77217 !important;
 }
 #steps_tab .nav-item {
-  width: 25%;
+  width: 20%;
   text-align:center;
 }
 .tab-pane.fade.steps {

@@ -1006,12 +1006,16 @@ console.log("???? = " + rcv)
   if (command == "checkDomain") {
 
     if (rcv[4] == "1") {
+      localStorage.cloudMode = "ip";
       $("#dName").val(rcv[5] + "." + rcv[6] + "." + rcv[7] + "." + rcv[8] + ":" + rcv[9]);
     } else {
+        localStorage.cloudMode = "domain";
       $("#dName").val(rcv[5] + ":" + rcv[6])
     }
     localStorage.saunaid = rcv[2];
+
     $("#saunaid").val(rcv[2])
+
   }
   if (command == "changeNetwork") {
     if (rstr.indexOf("LOCAL_NTW_OK") > -1) {
@@ -1781,13 +1785,19 @@ function changeDomain() {
   localStorage.currentChangeNumber++;
   if (md == "url") {
     var uss = us[0].split(".");
-    var toSend = "$$$1," + localStorage.currentChangeNumber + "," +  localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
+    if (localStorage.cloudMode == "ip") {
+      var toSend = "$$$1," + localStorage.currentChangeNumber + "," +  localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + "," +uss[3] + "," + us[1] + ",&&&";
+    } else {
+      var u = $("#dName").val().split(":");
+      var toSend = "$$$1," + localStorage.currentChangeNumber + "," +  localStorage.password.trim().padStart(10,"0") + ",13,0," + u[0] + "," + u[1] + ",&&&";
+
+    }
   } else {
     var uss = us[0].split(".");
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + ","  + uss[3] + "," + us[1] + ",&&&";
   }
   console.log(toSend)
-  
+
   swal({
     type: "info",
     text: "Setting domain. Be patient.",
@@ -1795,7 +1805,7 @@ function changeDomain() {
   })
   $("#url").val(u);
   if (localStorage.mode == "url") {
-
+    console.log("http://" + localStorage.url + "/?settings=" + toSend)
     $.ajax({
       url:  "http://" + localStorage.url + "/?settings=" + toSend,
       type: "GET",
@@ -1804,6 +1814,7 @@ function changeDomain() {
 
       },
       success: function(result){
+
         showResults(result);
 
       },
