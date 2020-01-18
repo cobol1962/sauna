@@ -50,6 +50,10 @@
           z-index: 0;
           transition: all .5s ease;
       }
+      #smode-error {
+        position:absolute;
+        top:26px;
+      }
     </style>
     <title>SENSUM SAUNA</title>
     </head>
@@ -175,29 +179,46 @@
               </div>
             </div>
             <div id="step5" class="tab-pane fade steps">
-              <form id="appsettings" style="width:70%;margin : 5px auto;">
+              <form id="appsettings" style="width:100%;margin : 5px auto;">
                 <div class="form-group">
+                    <label for="bt">Salt Wall/Blouetooth</label>
+                    <select class="form-control" id="bt" name="bt">
+                      <option value="salt">Salt Wall</option>
+                      <option value="btt">Bluetooth</option>
+                    </select>
+                </div>
+                <div class="form-group" style="display:flex; justify-content: center;">
                   <div class="pretty p-switch">
-                      <input type="checkbox" id="sinfra" />
-                      <div class="state">
+                      <input type="checkbox" id="sinfra" name="smode" />
+                      <div class="state p-warning">
                           <label>Infra</label>
                       </div>
                   </div>
                   <div class="pretty p-switch">
-                      <input type="checkbox" id="sfinn" />
-                      <div class="state">
+                      <input type="checkbox" id="sfinn" name="smode" />
+                      <div class="state p-warning">
                           <label>Finn</label>
                       </div>
                   </div>
                   <div class="pretty p-switch">
-                      <input type="checkbox" id="sbio" />
-                      <div class="state">
+                      <input type="checkbox" id="sbio" name="smode" />
+                      <div class="state p-warning">
                           <label>Bio</label>
                       </div>
                   </div>
                 </div>
-              </form>
-            </div>
+                <div class="form-group" style="margin-top:40px;display:flex; justify-content: center;">
+                  <div class="pretty p-switch">
+                      <input type="checkbox" id="sroom" name="sroom" />
+                      <div class="state p-warning">
+                          <label>Room temperature</label>
+                      </div>
+                  </div>
+                </div>
+                 <button   onclick="$('#appsettings').submit();" style="letter-spacing: 3px;margin-top:30px;position: absolute;left: 50%;transform: translate(-50%, -50%);" type="button"  class="btn btn-primary">Submit App settings</button>
+                </form>
+
+
           </div>
 
 

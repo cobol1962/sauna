@@ -50,6 +50,113 @@ var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
 
+  if (localStorage.bt !== undefined) {
+    $("#bt").val(localStorage.bt);
+    if (localStorage.bt == "btt") {
+        $("#bt").val("btt");
+        $(".bluetooth").show();
+        $(".wall").hide();
+    } else {
+       $("#bt").val("salt");
+       $(".bluetooth").hide();
+       $(".wall").show();
+    }
+  } else {
+    if (localStorage.mode == "url") {
+        $("#bt").val("btt");
+        $(".bluetooth").show();
+        $(".wall").hide();
+    } else {
+       $("#bt").val("salt");
+       $(".bluetooth").hide();
+       $(".wall").show();
+    }
+  }
+  if (localStorage.sfinn !== undefined && localStorage.sinfra !== undefined && localStorage.sbio !== undefined) {
+    if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
+      $("#sfinn")[0].checked = true;
+      $("#sinfra")[0].checked = true;
+      $("#sbio")[0].checked = true;
+        $(".finn").show();
+        $(".infra").show();
+        $(".steam").show();
+        $(".finn").css({
+          minWidth: "32%"
+        })
+        $(".infra").css({
+          minWidth: "32%"
+        })
+        $(".steam").css({
+          minWidth: "32%"
+        })
+    }
+
+    if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio != "on") {
+      $("#sfinn")[0].checked = false;
+      $("#sinfra")[0].checked = true;
+      $("#sbio")[0].checked = false;
+      $(".finn").hide();
+      $(".steam").hide();
+      $(".infra").show();
+      $(".infra").css({
+        minWidth: "100%"
+      })
+    }
+
+    if (localStorage.sfinn != "on" && localStorage.sinfra != "on" && localStorage.sbio == "on") {
+      $("#sfinn")[0].checked = false;
+      $("#sinfra")[0].checked = false;
+      $("#sbio")[0].checked = true;
+      $(".finn").hide();
+      $(".steam").show();
+      $(".infra").hide();
+      $(".steam").css({
+        minWidth: "100%"
+      })
+    }
+
+    if (localStorage.sfinn == "on" && localStorage.sinfra != "on" && localStorage.sbio != "on") {
+      $("#sfinn")[0].checked = true;
+      $("#sinfra")[0].checked = false;
+      $("#sbio")[0].checked = false;
+      $(".finn").show();
+      $(".steam").hide();
+      $(".infra").hide();
+      $(".finn").css({
+        minWidth: "98%"
+      })
+    }
+
+    if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio != "on") {
+      $("#sfinn")[0].checked = true;
+      $("#sinfra")[0].checked = true;
+      $("#sbio")[0].checked = false;
+      $(".finn").show();
+      $(".infra").show();
+      $(".steam").hide();
+      $(".finn").css({
+        minWidth: "48%"
+      })
+      $(".infra").css({
+        minWidth: "50%"
+      })
+    }
+
+    if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
+      $("#sfinn")[0].checked = true;
+      $("#sinfra")[0].checked = false;
+      $("#sbio")[0].checked = true;
+      $(".finn").show();
+      $(".infra").hide();
+      $(".steam").show();
+      $(".finn").css({
+        minWidth: "48%"
+      })
+      $(".steam").css({
+        minWidth: "48%"
+      })
+    }
+  }
   //localStorage.mode = "url";
   setInterval(function() {
     if  (!$("[setup]").is(":visible")) {
@@ -75,6 +182,9 @@ $(document).ready(function() {
   jQuery.validator.addMethod("isOldPass", function(value, element) {
     return (element.value == localStorage.password);
   }, "Please enter old password");
+  jQuery.validator.addMethod("isOneChecked", function(value, element) {
+    return ($("#sfinn")[0].checked || $("#sinfra")[0].checked || $("#sbio")[0].checked );
+  }, "Select at least one sauna mode");
  $("[main]").hide();
   $( "#setupSauna" ).validate({
     rules: {
@@ -98,6 +208,22 @@ $(document).ready(function() {
       localStorage.url = $("#url").val();
 
       setupDone = true;
+      window.location.reload();
+    }
+  });
+  $( "#appsettings" ).validate({
+    rules: {
+      smode: {
+        isOneChecked: true
+      }
+    },
+    submitHandler: function(form) {
+      $.each($("#appsettings").find("input"), function() {
+        localStorage[$(this).attr("id")] = (($(this)[0].checked) ? "on" : "off");
+      })
+      $.each($("#appsettings").find("select"), function() {
+        localStorage[$(this).attr("id")] = $(this).val();
+      })
       window.location.reload();
     }
   });
@@ -431,8 +557,16 @@ function continueStart() {
       showConfirmButton: false
     })*/
     var o = true;
-    try {
-    ws = new ReconnectingWebSocket(localStorage.saunaid);
+  try {
+
+    var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password + ",14,&&&";
+    command = "checkMode";
+    var obj = {
+      action: "command",
+      parameters: toSend
+    }
+     ws = new ReconnectingWebSocket(localStorage.saunaid);
+     ws.send(JSON.stringify(obj));
   } catch(err) {
     o = false;
     swal({
@@ -1080,50 +1214,169 @@ console.log("???? = " + rcv)
     }
   }
   if (command == "checkMode") {
-    switch(rcv[5]) {
-      case "1":
-        $(".finn").hide();
-        $(".steam").hide();
-        $(".infra").show();
-        $(".infra").css({
-          minWidth: "100%"
-        })
-        break;
-      case "2":
-        $(".finn").show();
-        $(".steam").hide();
-        $(".infra").hide();
-        $(".finn").css({
-          minWidth: "98%"
-        })
-        break;
-      case "3":
-        $(".finn").show();
-        $(".infra").show();
-        $(".steam").hide();
-        $(".finn").css({
-          minWidth: "48%"
-        })
-        $(".infra").css({
-          minWidth: "50%"
-        })
-        break;
-      case "4":
+    if (localStorage.sfinn === undefined || localStorage.sinfra === undefined || localStorage.sbio === undefined) {
+          switch(rcv[5]) {
+            case "1":
+              $(".finn").hide();
+              $(".steam").hide();
+              $(".infra").show();
+              $(".infra").css({
+                minWidth: "100%"
+              })
+              break;
+            case "2":
+              $(".finn").show();
+              $(".steam").hide();
+              $(".infra").hide();
+              $(".finn").css({
+                minWidth: "98%"
+              })
+              break;
+            case "3":
+              $(".finn").show();
+              $(".infra").show();
+              $(".steam").hide();
+              $(".finn").css({
+                minWidth: "48%"
+              })
+              $(".infra").css({
+                minWidth: "50%"
+              })
+              break;
+            case "4":
+              localStorage.sfinn = "1";
+              localStorage.sinfra = "1";
+              localStorage.sbio = "1";
+              $("#sfinn")[0].checked = true;
+              $("#sinfra")[0].checked = true;
+              $("#sbio")[0].checked = true;
+                $(".finn").show();
+                $(".infra").show();
+                $(".steam").show();
+                $(".finn").css({
+                  minWidth: "32%"
+                })
+                $(".infra").css({
+                  minWidth: "32%"
+                })
+                $(".steam").css({
+                  minWidth: "32%"
+                })
+                break;
+          }
+      } else {
+
+        if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
+          $("#sfinn")[0].checked = true;
+          $("#sinfra")[0].checked = true;
+          $("#sbio")[0].checked = true;
+            $(".finn").show();
+            $(".infra").show();
+            $(".steam").show();
+            $(".finn").css({
+              minWidth: "32%"
+            })
+            $(".infra").css({
+              minWidth: "32%"
+            })
+            $(".steam").css({
+              minWidth: "32%"
+            })
+        }
+
+        if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio != "on") {
+          $("#sfinn")[0].checked = false;
+          $("#sinfra")[0].checked = true;
+          $("#sbio")[0].checked = false;
+          $(".finn").hide();
+          $(".steam").hide();
+          $(".infra").show();
+          $(".infra").css({
+            minWidth: "100%"
+          })
+        }
+
+        if (localStorage.sfinn != "on" && localStorage.sinfra != "on" && localStorage.sbio == "on") {
+          $("#sfinn")[0].checked = false;
+          $("#sinfra")[0].checked = false;
+          $("#sbio")[0].checked = true;
+          $(".finn").hide();
+          $(".steam").show();
+          $(".infra").hide();
+          $(".steam").css({
+            minWidth: "100%"
+          })
+        }
+
+        if (localStorage.sfinn == "on" && localStorage.sinfra != "on" && localStorage.sbio != "on") {
+          $("#sfinn")[0].checked = true;
+          $("#sinfra")[0].checked = false;
+          $("#sbio")[0].checked = false;
+          $(".finn").show();
+          $(".steam").hide();
+          $(".infra").hide();
+          $(".finn").css({
+            minWidth: "98%"
+          })
+        }
+
+        if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio != "on") {
+          $("#sfinn")[0].checked = true;
+          $("#sinfra")[0].checked = true;
+          $("#sbio")[0].checked = false;
           $(".finn").show();
           $(".infra").show();
-          $(".steam").show();
+          $(".steam").hide();
           $(".finn").css({
-            minWidth: "32%"
+            minWidth: "48%"
           })
           $(".infra").css({
-            minWidth: "32%"
+            minWidth: "50%"
+          })
+        }
+
+        if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
+          $("#sfinn")[0].checked = true;
+          $("#sinfra")[0].checked = false;
+          $("#sbio")[0].checked = true;
+          $(".finn").show();
+          $(".infra").hide();
+          $(".steam").show();
+          $(".finn").css({
+            minWidth: "48%"
           })
           $(".steam").css({
-            minWidth: "32%"
+            minWidth: "48%"
           })
-          break;
-    }
-
+        }
+        var pp = parseInt((($("body").width() - 8) / 5) / 1);
+        var rt = parseFloat($("body").width() / 430);
+        var nb = 0;
+        $.each($("[bottombuttons]").find("div"), function() {
+          if ($(this).is(":visible")) {
+            nb++;
+          }
+        })
+        var pp1 = parseInt(($("body").width() / nb) / 1);
+        if (nb == 3) {
+          $("#roomheat_div").css({
+            left: "50%"
+          })
+        }
+        if (nb == 4) {
+          $("#roomheat_div").css({
+            left: "60%"
+          })
+        }
+        $.each($("[bottombuttons]").find("div"), function() {
+          $(this).css({
+            height: pp * rt,
+            width: pp1 - 12,
+            minWidth: pp1 - 12,
+            maxWidth: pp1 - 12
+          })
+        })
+      }
     if (localStorage.mode == "socket") {
       $(".wall").show();
       $(".bluetooth").hide();
@@ -1142,13 +1395,22 @@ console.log("???? = " + rcv)
     }
   })
   var pp1 = parseInt(($("body").width() / nb) / 1);
-
+  if (nb == 3) {
+    $("#roomheat_div").css({
+      left: "50%"
+    })
+  }
+  if (nb == 4) {
+    $("#roomheat_div").css({
+      left: "60%"
+    })
+  }
   $.each($("[bottombuttons]").find("div"), function() {
     $(this).css({
       height: pp * rt,
-      width: pp1 - 8,
-      minWidth: pp1 - 8,
-      maxWidth: pp1 - 8
+      width: pp1 - 12,
+      minWidth: pp1 - 12,
+      maxWidth: pp1 - 12
     })
   })
 }
