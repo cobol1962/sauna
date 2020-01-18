@@ -73,6 +73,15 @@ $(document).ready(function() {
     }
   }
   if (localStorage.sfinn !== undefined && localStorage.sinfra !== undefined && localStorage.sbio !== undefined) {
+    if (localStorage.sroom != "on") {
+      $("#roomheat_div").hide();
+      $(".room").hide();
+      $("#sroom")[0].checked = false;
+    } else {
+      $("#roomheat_div").show();
+      $("#sroom")[0].checked = true;
+    }
+
     if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
       $("#sfinn")[0].checked = true;
       $("#sinfra")[0].checked = true;
@@ -156,6 +165,33 @@ $(document).ready(function() {
         minWidth: "48%"
       })
     }
+    var pp = parseInt((($("body").width() - 8) / 5) / 1);
+    var rt = parseFloat($("body").width() / 430);
+    var nb = 0;
+    $.each($("[bottombuttons]").find("div"), function() {
+      if ($(this).is(":visible")) {
+        nb++;
+      }
+    })
+    var pp1 = parseInt(($("body").width() / nb) / 1);
+    if (nb == 3) {
+      $("#roomheat_div").css({
+        left: "50%"
+      })
+    }
+    if (nb == 4) {
+      $("#roomheat_div").css({
+        left: "60%"
+      })
+    }
+    $.each($("[bottombuttons]").find("div"), function() {
+      $(this).css({
+        height: pp * rt,
+        width: pp1 - 10,
+        minWidth: pp1 - 10,
+        maxWidth: pp1 - 10
+      })
+    })
   }
   //localStorage.mode = "url";
   setInterval(function() {
@@ -208,6 +244,7 @@ $(document).ready(function() {
       localStorage.url = $("#url").val();
 
       setupDone = true;
+
       window.location.reload();
     }
   });
@@ -224,7 +261,12 @@ $(document).ready(function() {
       $.each($("#appsettings").find("select"), function() {
         localStorage[$(this).attr("id")] = $(this).val();
       })
-      window.location.reload();
+
+      saunaSettings.bySaunaState = "0";
+      trySet();
+      setTimeout(function() {
+        window.location.reload();
+      }, 2000);
     }
   });
 
@@ -651,6 +693,7 @@ var tHoursInt = null;
 var tMinutesInt = null;
 function initializeDrums() {
   Hammer.plugins.fakeMultitouch();
+
   for (i=1;i<101;i+=1) {
     $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "<b>&#176;C</b>" + "</option>").appendTo($("#temperature"));
   }
@@ -663,7 +706,7 @@ function initializeDrums() {
   $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#steam"));
   $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#steam"));
   $("<option value='" + 999 + "'>" + "" + "</option>").appendTo($("#steam"));
-  for (i=0;i<13;i++) {
+  for (i=0;i<10;i++) {
       $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "</option>").appendTo($("#timerHours"));
   }
   for (i=0;i<60;i++) {
@@ -1264,6 +1307,33 @@ console.log("???? = " + rcv)
                 })
                 break;
           }
+          var pp = parseInt((($("body").width() - 8) / 5) / 1);
+          var rt = parseFloat($("body").width() / 430);
+          var nb = 0;
+          $.each($("[bottombuttons]").find("div"), function() {
+            if ($(this).is(":visible")) {
+              nb++;
+            }
+          })
+          var pp1 = parseInt(($("body").width() / nb) / 1);
+          if (nb == 3) {
+            $("#roomheat_div").css({
+              left: "50%"
+            })
+          }
+          if (nb == 4) {
+            $("#roomheat_div").css({
+              left: "60%"
+            })
+          }
+          $.each($("[bottombuttons]").find("div"), function() {
+            $(this).css({
+              height: pp * rt,
+              width: pp1 - 10,
+              minWidth: pp1 - 10,
+              maxWidth: pp1 - 10
+            })
+          })
       } else {
 
         if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
@@ -1371,9 +1441,9 @@ console.log("???? = " + rcv)
         $.each($("[bottombuttons]").find("div"), function() {
           $(this).css({
             height: pp * rt,
-            width: pp1 - 12,
-            minWidth: pp1 - 12,
-            maxWidth: pp1 - 12
+            width: pp1 - 10,
+            minWidth: pp1 - 10,
+            maxWidth: pp1 - 10
           })
         })
       }
@@ -1408,9 +1478,9 @@ console.log("???? = " + rcv)
   $.each($("[bottombuttons]").find("div"), function() {
     $(this).css({
       height: pp * rt,
-      width: pp1 - 12,
-      minWidth: pp1 - 12,
-      maxWidth: pp1 - 12
+      width: pp1 - 10,
+      minWidth: pp1 - 10,
+      maxWidth: pp1 - 10
     })
   })
 }
@@ -1497,8 +1567,14 @@ function drawSauna(received = true) {
     $(".room").hide();
   } else {
     roomRemoved = false;
-    $("#roomheat_div").show();
-    $(".room").show();
+
+    if (localStorage.sroom == "on") {
+      $(".room").show();
+        $("#roomheat_div").show();
+    } else {
+      $(".room").hide();
+        $("#roomheat_div").hide();
+    }
 
   }
   if (saunaSettings.bVentSate != "0") {
