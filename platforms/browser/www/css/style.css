@@ -58,6 +58,16 @@ overflow: hidden;
   margin-left: 5px;
   min-width:90%;
 }
+#bbtns {
+  display: flex;
+  flex-direction: wrap;
+  align-items: stretch;
+  width: 100%;
+}
+#bbtns div {
+  border: 2px solid black;
+  margin-left: 0px !important;
+}
 footer {
   position: fixed;
   bottom: 0px;

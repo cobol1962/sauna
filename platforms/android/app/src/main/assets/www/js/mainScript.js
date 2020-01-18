@@ -124,6 +124,16 @@ $(document).ready(function() {
       })
     }
 
+    if (localStorage.sfinn == "on" && localStorage.sinfra != "on" && localStorage.sbio == "on") {
+      $("#sfinn")[0].checked = true;
+      $("#sinfra")[0].checked = false;
+      $("#sbio")[0].checked = true;
+      $(".finn").show();
+      $(".steam").show();
+      $(".infra").hide();
+
+    }
+
     if (localStorage.sfinn == "on" && localStorage.sinfra != "on" && localStorage.sbio != "on") {
       $("#sfinn")[0].checked = true;
       $("#sinfra")[0].checked = false;
@@ -152,46 +162,43 @@ $(document).ready(function() {
     }
 
     if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
-      $("#sfinn")[0].checked = true;
-      $("#sinfra")[0].checked = false;
+
+      $("#sfinn")[0].checked = false;
+      $("#sinfra")[0].checked = true;
       $("#sbio")[0].checked = true;
-      $(".finn").show();
-      $(".infra").hide();
+      $(".finn").hide();
+      $(".infra").show();
       $(".steam").show();
-      $(".finn").css({
-        minWidth: "48%"
-      })
-      $(".steam").css({
-        minWidth: "48%"
-      })
+
     }
-    var pp = parseInt((($("body").width() - 8) / 5) / 1);
-    var rt = parseFloat($("body").width() / 430);
-    var nb = 0;
-    $.each($("[bottombuttons]").find("div"), function() {
-      if ($(this).is(":visible")) {
-        nb++;
-      }
-    })
-    var pp1 = parseInt(($("body").width() / nb) / 1);
-    if (nb == 3) {
-      $("#roomheat_div").css({
-        left: "50%"
-      })
-    }
-    if (nb == 4) {
-      $("#roomheat_div").css({
-        left: "60%"
-      })
-    }
-    $.each($("[bottombuttons]").find("div"), function() {
-      $(this).css({
-        height: pp * rt,
-        width: pp1 - 10,
-        minWidth: pp1 - 10,
-        maxWidth: pp1 - 10
-      })
-    })
+    setTimeout(function() {
+        var pp = parseInt((($("body").width() - 18) / 5) / 1);
+        var rt = parseFloat($("body").width() / 436);
+        var nb = 0;
+        $.each($("[bottombuttons]").find("div"), function() {
+          if ($(this).is(":visible")) {
+            nb++;
+          }
+        })
+
+        var pp1 = parseInt(($("body").width() / nb) / 1);
+        if (nb == 3) {
+          $("#roomheat_div").css({
+            left: "50%"
+          })
+        }
+        if (nb == 4) {
+          $("#roomheat_div").css({
+            left: "60%"
+          })
+        }
+        $.each($("[bottombuttons]").find("div"), function() {
+          $(this).css({
+            height: pp * rt,
+
+          })
+        })
+      }, 500);
   }
   //localStorage.mode = "url";
   setInterval(function() {
@@ -356,12 +363,8 @@ $(document).ready(function() {
 
     var pp = parseInt(($("body").width() / 5) / 1);
     var rt = parseFloat($("body").width() / 430);
-    var nb = 0;
-    $.each($("[bottombuttons]").find("div"), function() {
-      if ($(this).is(":visible")) {
-        nb++;
-      }
-    })
+
+
 
     $(".row.buttons div").not("#stateTable").css({
       height: pp * rt,
@@ -1257,6 +1260,7 @@ console.log("???? = " + rcv)
     }
   }
   if (command == "checkMode") {
+
     if (localStorage.sfinn === undefined || localStorage.sinfra === undefined || localStorage.sbio === undefined) {
           switch(rcv[5]) {
             case "1":
@@ -1326,126 +1330,13 @@ console.log("???? = " + rcv)
               left: "60%"
             })
           }
+
           $.each($("[bottombuttons]").find("div"), function() {
             $(this).css({
               height: pp * rt,
-              width: pp1 - 10,
-              minWidth: pp1 - 10,
-              maxWidth: pp1 - 10
+
             })
           })
-      } else {
-
-        if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
-          $("#sfinn")[0].checked = true;
-          $("#sinfra")[0].checked = true;
-          $("#sbio")[0].checked = true;
-            $(".finn").show();
-            $(".infra").show();
-            $(".steam").show();
-            $(".finn").css({
-              minWidth: "32%"
-            })
-            $(".infra").css({
-              minWidth: "32%"
-            })
-            $(".steam").css({
-              minWidth: "32%"
-            })
-        }
-
-        if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio != "on") {
-          $("#sfinn")[0].checked = false;
-          $("#sinfra")[0].checked = true;
-          $("#sbio")[0].checked = false;
-          $(".finn").hide();
-          $(".steam").hide();
-          $(".infra").show();
-          $(".infra").css({
-            minWidth: "100%"
-          })
-        }
-
-        if (localStorage.sfinn != "on" && localStorage.sinfra != "on" && localStorage.sbio == "on") {
-          $("#sfinn")[0].checked = false;
-          $("#sinfra")[0].checked = false;
-          $("#sbio")[0].checked = true;
-          $(".finn").hide();
-          $(".steam").show();
-          $(".infra").hide();
-          $(".steam").css({
-            minWidth: "100%"
-          })
-        }
-
-        if (localStorage.sfinn == "on" && localStorage.sinfra != "on" && localStorage.sbio != "on") {
-          $("#sfinn")[0].checked = true;
-          $("#sinfra")[0].checked = false;
-          $("#sbio")[0].checked = false;
-          $(".finn").show();
-          $(".steam").hide();
-          $(".infra").hide();
-          $(".finn").css({
-            minWidth: "98%"
-          })
-        }
-
-        if (localStorage.sfinn == "on" && localStorage.sinfra == "on" && localStorage.sbio != "on") {
-          $("#sfinn")[0].checked = true;
-          $("#sinfra")[0].checked = true;
-          $("#sbio")[0].checked = false;
-          $(".finn").show();
-          $(".infra").show();
-          $(".steam").hide();
-          $(".finn").css({
-            minWidth: "48%"
-          })
-          $(".infra").css({
-            minWidth: "50%"
-          })
-        }
-
-        if (localStorage.sfinn != "on" && localStorage.sinfra == "on" && localStorage.sbio == "on") {
-          $("#sfinn")[0].checked = true;
-          $("#sinfra")[0].checked = false;
-          $("#sbio")[0].checked = true;
-          $(".finn").show();
-          $(".infra").hide();
-          $(".steam").show();
-          $(".finn").css({
-            minWidth: "48%"
-          })
-          $(".steam").css({
-            minWidth: "48%"
-          })
-        }
-        var pp = parseInt((($("body").width() - 8) / 5) / 1);
-        var rt = parseFloat($("body").width() / 430);
-        var nb = 0;
-        $.each($("[bottombuttons]").find("div"), function() {
-          if ($(this).is(":visible")) {
-            nb++;
-          }
-        })
-        var pp1 = parseInt(($("body").width() / nb) / 1);
-        if (nb == 3) {
-          $("#roomheat_div").css({
-            left: "50%"
-          })
-        }
-        if (nb == 4) {
-          $("#roomheat_div").css({
-            left: "60%"
-          })
-        }
-        $.each($("[bottombuttons]").find("div"), function() {
-          $(this).css({
-            height: pp * rt,
-            width: pp1 - 10,
-            minWidth: pp1 - 10,
-            maxWidth: pp1 - 10
-          })
-        })
       }
     if (localStorage.mode == "socket") {
       $(".wall").show();
@@ -1458,12 +1349,22 @@ console.log("???? = " + rcv)
   }
   var pp = parseInt((($("body").width() - 8) / 5) / 1);
   var rt = parseFloat($("body").width() / 430);
-  var nb = 0;
-  $.each($("[bottombuttons]").find("div"), function() {
-    if ($(this).is(":visible")) {
-      nb++;
-    }
-  })
+  var nb = 1;
+
+  if (localStorage.sfinn == "on") {
+    nb++
+  }
+  if (localStorage.sinfra == "on") {
+    nb++
+  }
+  if (localStorage.sbio == "on") {
+    nb++
+  }
+  if (localStorage.sroom == "on") {
+    nb++
+  }
+  var a1 = $("body").width() - ((nb -1) * 10);
+
   var pp1 = parseInt(($("body").width() / nb) / 1);
   if (nb == 3) {
     $("#roomheat_div").css({
@@ -1478,9 +1379,9 @@ console.log("???? = " + rcv)
   $.each($("[bottombuttons]").find("div"), function() {
     $(this).css({
       height: pp * rt,
-      width: pp1 - 10,
-      minWidth: pp1 - 10,
-      maxWidth: pp1 - 10
+      width: (100 / nb) + "%",
+      minWidth: (100 / nb) + "%",
+      maxWidth: (100 / nb) + "%"
     })
   })
 }
