@@ -49,7 +49,6 @@ currentSettings = [];
 var refreshState = false;
 $(document).ready(function() {
   localStorage.connected = false;
-
   if (localStorage.bt !== undefined) {
     $("#bt").val(localStorage.bt);
     if (localStorage.bt == "btt") {
@@ -1272,6 +1271,9 @@ console.log("???? = " + rcv)
               })
               break;
             case "2":
+            localStorage.sfinn = "on";
+            localStorage.sinfra = "off";
+            localStorage.sbio = "off";
               $(".finn").show();
               $(".steam").hide();
               $(".infra").hide();
@@ -1280,6 +1282,9 @@ console.log("???? = " + rcv)
               })
               break;
             case "3":
+            localStorage.sfinn = "on";
+            localStorage.sinfra = "on";
+            localStorage.sbio = "off";
               $(".finn").show();
               $(".infra").show();
               $(".steam").hide();
@@ -1291,34 +1296,36 @@ console.log("???? = " + rcv)
               })
               break;
             case "4":
-              localStorage.sfinn = "1";
-              localStorage.sinfra = "1";
-              localStorage.sbio = "1";
+              localStorage.sfinn = "on";
+              localStorage.sinfra = "on";
+              localStorage.sbio = "on";
               $("#sfinn")[0].checked = true;
               $("#sinfra")[0].checked = true;
               $("#sbio")[0].checked = true;
                 $(".finn").show();
                 $(".infra").show();
                 $(".steam").show();
-                $(".finn").css({
-                  minWidth: "32%"
-                })
-                $(".infra").css({
-                  minWidth: "32%"
-                })
-                $(".steam").css({
-                  minWidth: "32%"
-                })
+
                 break;
           }
           var pp = parseInt((($("body").width() - 8) / 5) / 1);
           var rt = parseFloat($("body").width() / 430);
-          var nb = 0;
-          $.each($("[bottombuttons]").find("div"), function() {
-            if ($(this).is(":visible")) {
-              nb++;
-            }
-          })
+          var nb = 1;
+
+          if (localStorage.sfinn == "on") {
+            nb++
+          }
+          if (localStorage.sinfra == "on") {
+            nb++
+          }
+          if (localStorage.sbio == "on") {
+            nb++
+          }
+          if (localStorage.sroom == "on") {
+            nb++
+          }
+          var a1 = $("body").width() - ((nb -1) * 10);
+
           var pp1 = parseInt(($("body").width() / nb) / 1);
           if (nb == 3) {
             $("#roomheat_div").css({
@@ -1330,21 +1337,24 @@ console.log("???? = " + rcv)
               left: "60%"
             })
           }
-
           $.each($("[bottombuttons]").find("div"), function() {
             $(this).css({
               height: pp * rt,
-
+              width: (100 / nb) + "%",
+              minWidth: (100 / nb) + "%",
+              maxWidth: (100 / nb) + "%"
             })
           })
       }
-    if (localStorage.mode == "socket") {
-      $(".wall").show();
-      $(".bluetooth").hide();
-    } else {
-      $(".wall").hide();
-      $(".bluetooth").show();
-    }
+      if (localStorage.bt === undefined) {
+        if (localStorage.mode == "socket") {
+          $(".wall").show();
+          $(".bluetooth").hide();
+        } else {
+          $(".wall").hide();
+          $(".bluetooth").show();
+        }
+      }
 
   }
   var pp = parseInt((($("body").width() - 8) / 5) / 1);
