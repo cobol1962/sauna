@@ -202,7 +202,6 @@ $(document).ready(function() {
   //localStorage.mode = "url";
   setInterval(function() {
     if  (!$("[setup]").is(":visible")) {
-      console.log(localStorage.saunaName)
       $("#saunaName").html(localStorage.saunaName);
     } else {
       $("#saunaName").html("SETTINGS");
@@ -440,7 +439,6 @@ for (i = 0; i < acc.length; i++) {
       localStorage.currentChangeNumber++;
       command = "checkDomain";
       var toSend = "$$$1," + localStorage.currentChangeNumber + "," + + ((localStorage.mode == "socket") ? localStorage.saunaid + "," : "") + localStorage.password.trim().padStart(10,"0") + ",12,&&&";
-      console.log(toSend)
       $.ajax({
         url:  "http://" + localStorage.url + "/?settings=" + toSend,
         type: "GET",
@@ -711,6 +709,10 @@ function initializeDrums() {
   for (i=0;i<10;i++) {
       $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "</option>").appendTo($("#timerHours"));
   }
+  $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#timerHours"));
+  $("<option value='" + 999 + "'>" +  "" + "</option>").appendTo($("#timerHours"));
+  $("<option value='" + 999 + "'>" + "" + "</option>").appendTo($("#timerHours"));
+
   for (i=0;i<60;i++) {
       $("<option value='" + i + "'>" + i.toString().padStart(2, "0") + "</option>").appendTo($("#timerMinutes"));
   }
@@ -820,15 +822,15 @@ function initializeDrums() {
         tHoursInt = setTimeout(function() {
           saunaSettings.bySaunaTimeHour = e.value;
           if (saunaSettings.bySaunaState == "1") {
-            localStorage.infra.bySaunaTimeHour = saunaSettings.bySaunaTimeMin;
+            localStorage.infra.bySaunaTimeHour = saunaSettings.bySaunaTimeHour;
           }
           if (saunaSettings.bySaunaState == "2") {
-            localStorage.finn.bySaunaTimeHour = saunaSettings.bySaunaTimeMin;
+            localStorage.finn.bySaunaTimeHour = saunaSettings.bySaunaTimeHour;
           }
           if (saunaSettings.bySaunaState == "3") {
-            localStorage.steam.bySaunaTimeHour = saunaSettings.bySaunaTimeMin;
+            localStorage.steam.bySaunaTimeHour = saunaSettings.bySaunaTimeHour;
           }
-          $("#timerHours_value").html(saunaSettings.bySaunaTimeHour.toString().padStart(2, "0"));
+          $("#timerHours_value").html(e.value.toString().padStart(2, "0"));
         //  clearInterval(rint);
           trySet();
         }, 3000);
@@ -1604,10 +1606,19 @@ function drawSauna(received = true) {
   var secs1 = (parseInt($("#timerHours_value").html()) * 3600) + (parseInt($("#timerMinutes_value").html()) * 60) + (parseInt($("#timerSeconds_value").html()) * 1);
 
   var diff = Math.abs(secs - secs1);
+  $.each($("#timerHours").find("option"), function(ind) {
 
+    if ($(this).attr("value") == saunaSettings.bySaunaTimeHour) {
+      tv2 = ind;
+    }
+  })
+    console.log(tv2)
+  $("#timerHours").drum('setIndex',tv2);
   if (diff > 3) {
+    var tv2 = 0;
+
     $("#timerHours_value").html(saunaSettings.bySaunaTimeHour.padStart(2, "0"));
-    $("#timerHours").drum('setIndex', parseInt(saunaSettings.bySaunaTimeHour));
+
     $("#timerMinutes_value").html(saunaSettings.bySaunaTimeMin.padStart(2, "0"));
     $("#timerMinutes").drum('setIndex', parseInt(saunaSettings.bySaunaTimeMin));
     $("#timerSeconds_value").html(saunaSettings.bySaunaTimeSec.padStart(2, "0"));
@@ -1677,7 +1688,6 @@ function trySet() {
     if (localStorage.currentChangeNumber > 255) {
       localStorage.currentChangeNumber = 0;
     }
-    console.log(saunaSettings["bSaltWall"])
   var tss = [saunaSettings.bySaunaState,saunaSettings.bySaunaTemp,saunaSettings.byInfraFill1,saunaSettings.byInfraFill2,saunaSettings.bySteam,saunaSettings.bySaunaTimeHour,saunaSettings.bySaunaTimeMin,saunaSettings.bySaunaTimeSec,saunaSettings.bRoomHeat,saunaSettings.byRoomTemp,saunaSettings.byRoomTemperringTemp,saunaSettings.bVentSate,saunaSettings.bS_Light,saunaSettings.bMoodLight,saunaSettings.bSaltWall,saunaSettings.bStarrySky];
   var toSend = "$$$1," + localStorage.currentChangeNumber + "," + ((localStorage.mode == "socket") ? localStorage.saunaid + "," : "") + localStorage.password.trim().padStart(10,"0") + ",";
   toSend += tss.join(",") + ",&&&";
@@ -1695,7 +1705,6 @@ function trySet() {
         break;
     }
   var frm = $("#setData");
-  console.log(toSend)
   if (localStorage.mode == "url") {
 
     $.ajax({
@@ -1781,7 +1790,6 @@ function trySet() {
         action: "command",
         parameters: toSend
       }
-      console.log(toSend)
       ws.send(JSON.stringify(obj));
     }
 
@@ -2045,7 +2053,6 @@ function changeDomain() {
     var uss = us[0].split(".");
     var toSend = "$$$1," + localStorage.currentChangeNumber + "," + localStorage.password.trim().padStart(10,"0") + ",13,1," + uss[0] + "," + uss[1] + "," + uss[2] + ","  + uss[3] + "," + us[1] + ",&&&";
   }
-  console.log(toSend)
 
   swal({
     type: "info",
@@ -2054,7 +2061,6 @@ function changeDomain() {
   })
   $("#url").val(u);
   if (localStorage.mode == "url") {
-    console.log("http://" + localStorage.url + "/?settings=" + toSend)
     $.ajax({
       url:  "http://" + localStorage.url + "/?settings=" + toSend,
       type: "GET",
