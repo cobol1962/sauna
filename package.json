@@ -16,7 +16,7 @@
         "cordova-plugin-splashscreen": "5.0.2",
         "cordova-plugin-whitelist": "^1.3.3",
         "cordova-plugin-socket-tcp": "~1.6.0",
-        "cordova-plugin-inappbrowser": "~1.7.2"
+        "cordova-plugin-inappbrowser": "~4.0.0"
     },
     "cordova": {
         "plugins": {
